@@ -1,0 +1,35 @@
+    /* ******* ********  ********  ******** * */
+                /* HOMEPAGE */
+    /* ******** ********  ********  ********  */
+#navigation-bar {
+    z-index: 10;
+    /*background-color: #300e48;*/
+    /*background: linear-gradient(180deg, rgba(18,44,72,1) 80%, rgba(0,0,0,1) 100%);*/
+    /*padding-bottom: 30px;*/
+    background-color: black;
+}
+
+#art-show-img-div {
+    background-color: black;
+}
+
+#art-show-img {
+    z-index: 0;
+    /*opacity: .8;*/
+    width: 100%;
+    -webkit-filter: blur(8px); /* Safari 6.0 - 9.0 */
+    filter: blur(8px) brightness(110%);
+}
+    /* ******* ********  ********  ******** * */
+                 /* ARTWORK */
+    /* ******* ********  ********  ******** * */
+.artwork-container {
+    width: 80% !important;
+}
+
+    /* ******* ********  ********  ******** * */
+                 /* PAINTINGS */
+    /* ******* ********  ********  ******** * */
+.painting {
+    /*border: none;*/
+}
