@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.alkan.artshowapp.models.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -14,7 +15,7 @@ import java.time.Year;
 @Getter
 @Setter
 @MappedSuperclass
-public class Person { // extends BaseEntity
+public class Person extends BaseEntity { // extends BaseEntity
 
     @Column(name = "name")
     private String name;
