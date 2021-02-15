@@ -11,7 +11,6 @@ import javax.persistence.MappedSuperclass;
 import java.time.Year;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @MappedSuperclass
@@ -28,4 +27,12 @@ public class Person extends BaseEntity { // extends BaseEntity
 
     @Column(name = "nationality")
     private String nationality;
+
+    public Person(Long id, String name, Year bornYear, Year deathYear, String nationality) {
+        super(id);
+        this.name = name;
+        this.bornYear = bornYear;
+        this.deathYear = deathYear;
+        this.nationality = nationality;
+    }
 }

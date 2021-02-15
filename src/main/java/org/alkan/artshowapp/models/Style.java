@@ -7,7 +7,8 @@ import lombok.Setter;
 import org.alkan.artshowapp.models.artworks.Artwork;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @NoArgsConstructor
@@ -22,5 +23,5 @@ public class Style extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "style")
-    private List<Artwork> artworks;
+    private Set<Artwork> artworks = new HashSet<>();
 }
