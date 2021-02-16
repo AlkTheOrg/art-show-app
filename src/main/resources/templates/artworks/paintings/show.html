@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body class="">
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+
+<div class="container mt-3 artwork-container">
+        <div class="card painting w-75 mx-auto" th:insert="artworks/paintings/_painting">
+        </div>
+</div>
+
+<script th:replace="fragments/jqueryInport"></script>
+<script th:replace="fragments/bootstrapMinInport"></script>
+</body>
+</html>
