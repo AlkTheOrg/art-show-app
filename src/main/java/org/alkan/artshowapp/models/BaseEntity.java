@@ -23,4 +23,9 @@ public class BaseEntity implements Serializable {
     public BaseEntity(Long id) {
         this.id = id;
     }
+
+    // Useful when deciding the text of submit buttons on forms.
+    public boolean isNew() {
+        return this.id == null;
+    }
 }
