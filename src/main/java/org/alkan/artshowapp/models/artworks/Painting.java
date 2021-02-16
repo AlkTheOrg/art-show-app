@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "paintings")
+@Table(name = "painting") // same as default @Table
 public class Painting extends Artwork{
 
     private float length;

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "artworks")
+@Table(name = "artwork") // same as default @Table
 @Inheritance(strategy = InheritanceType.JOINED)
 //@MappedSuperclass
 public abstract class Artwork extends BaseEntity {

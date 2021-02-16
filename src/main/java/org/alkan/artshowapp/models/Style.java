@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "styles")
+@Table(name = "style") // same as default @Table
 public class Style extends BaseEntity {
 
     @Column(name = "name")
