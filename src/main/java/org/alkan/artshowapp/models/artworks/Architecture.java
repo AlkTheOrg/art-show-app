@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.alkan.artshowapp.models.people.Architect;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +24,10 @@ public class Architecture extends Artwork{
 
     @Column(name = "height")
     private double height; // m
+
+    @ManyToOne
+    @JoinColumn(name = "architect_it")
+    private Architect architect;
 
     @Override
     public int calculateCost() {
