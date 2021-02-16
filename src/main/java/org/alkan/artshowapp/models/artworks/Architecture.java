@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.alkan.artshowapp.models.Style;
 import org.alkan.artshowapp.models.people.Architect;
 
 import javax.persistence.*;
@@ -31,6 +32,27 @@ public class Architecture extends Artwork{
 
     @Override
     public int calculateCost() {
-        return 0;
+        Style style = getStyle();
+        double uniquePrice = uniquePrice(style);
+        int cost = (int) (length * width * height * uniquePrice);
+
+        return cost;
+    }
+
+    private double uniquePrice(Style style) {
+        double result = 0.0;
+
+        switch (style.getName()) {
+            case ("Gothic"):
+                result = 1.0;
+                break;
+            case ("Baroque"):
+                result = 0.8;
+                break;
+            default:
+                result = 0.6;
+                break;
+        }
+        return result;
     }
 }
