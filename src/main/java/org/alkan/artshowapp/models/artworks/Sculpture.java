@@ -8,17 +8,20 @@ import org.alkan.artshowapp.models.people.Artist;
 
 import javax.persistence.*;
 
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "sculpture")
 public class Sculpture extends Artwork{
 
-    // Material
+    @ManyToOne
+    @JoinColumn(name = "material_id")
+    private Material material;
 
-    // weight
+    @Column(name = "weight")
+    private int weight;
 
     @ManyToOne
     @JoinColumn(name = "artist_id")
