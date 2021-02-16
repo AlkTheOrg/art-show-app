@@ -20,7 +20,9 @@ public class Sculpture extends Artwork{
 
     // weight
 
-
+    @ManyToOne
+    @JoinColumn(name = "artist_id")
+    private Artist artist;
 
     @Override
     public int calculateCost() {
