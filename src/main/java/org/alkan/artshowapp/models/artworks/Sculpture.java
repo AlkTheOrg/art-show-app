@@ -29,6 +29,23 @@ public class Sculpture extends Artwork{
 
     @Override
     public int calculateCost() {
-        return 0;
+        double uniquePrice = uniquePrice(material);
+        int cost = (int) (weight * uniquePrice );
+        return cost;
+    }
+
+    private double uniquePrice(Material material) {
+        double result = 0.0;
+
+        switch (material.getName()) {
+            case ("Bronze"):
+                result = 180;
+                break;
+            case ("Marble"):
+                result = 15;
+                break;
+        }
+
+        return result;
     }
 }
