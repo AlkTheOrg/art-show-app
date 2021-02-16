@@ -1,6 +1,6 @@
-package org.alkan.artshowapp.controllers;
+package org.alkan.artshowapp.controllers.people;
 
-import org.alkan.artshowapp.repositories.ArtistRepository;
+import org.alkan.artshowapp.repositories.people.ArtistRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

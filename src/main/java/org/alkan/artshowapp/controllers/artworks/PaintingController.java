@@ -1,6 +1,6 @@
-package org.alkan.artshowapp.controllers;
+package org.alkan.artshowapp.controllers.artworks;
 
-import org.alkan.artshowapp.repositories.PaintingRepository;
+import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
