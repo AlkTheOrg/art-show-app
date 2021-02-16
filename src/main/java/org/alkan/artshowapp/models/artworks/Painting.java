@@ -4,9 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.alkan.artshowapp.models.Style;
+import org.alkan.artshowapp.models.people.Artist;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -17,6 +22,10 @@ public class Painting extends Artwork{
 
     private float length;
     private float width;
+
+    @ManyToOne
+    @JoinColumn(name = "artist_id")
+    private Artist artist;
 
     public Painting(Long id, String name, Style style, float length, float width) {
         super(id, name, style);
