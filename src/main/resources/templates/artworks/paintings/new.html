@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body class="form-page">
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+
+
+    <div class="container form-container">
+        <h1 class="text-center font-weight-bold" style="color: rgba(0, 44, 8, 1);">New Painting</h1>
+        <form th:replace="/artworks/paintings/_form :: #painting-form"></form>
+    </div>
+
+    <footer>
+        <p class="col"><strong>Night Train</strong> by Lionel Walden</p>
+    </footer>
+
+<script th:replace="fragments/jqueryImport"></script>
+<script th:replace="fragments/bootstrapMinImport"></script>
+</body>
+</html>

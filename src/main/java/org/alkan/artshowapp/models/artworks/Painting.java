@@ -43,8 +43,10 @@ public class Painting extends Artwork{
 
     private double uniquePrice(Style style) {
         double result = 0.0;
-
-        switch (style.getName()) {
+        String name = null;
+        if (style != null)
+            name = style.getName();
+        switch (name) {
             case ("Renaissance"):
                 result = 7.0;
                 break;

@@ -33,3 +33,66 @@
 .painting {
     /*border: none;*/
 }
+
+    /* ******* ********  ********  ******** * */
+                    /* FORMS */
+    /* ******* ********  ********  ******** * */
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+.form-page {
+    background-image: url("../images/walden_night_train.png");
+}
+
+.form-container {
+    margin-top: 8rem;
+    width: 30%;
+}
+
+.artwork-form {
+    background: rgba(22, 22, 22, .3);
+    border: rgba(237, 248, 259, .7) solid 4px; /* #89949f */
+    border-radius: 5%;
+    font-weight: bold;
+    color: rgba(237, 248, 259, 1);
+    /*border: rgba(137, 148, 159, .5) solid 1.2px; !* #89949f *!*/
+}
+
+
+
+footer {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    height: 32px;
+    background-color: rgba(20, 20, 20, .8);
+    color: #AAA;
+    text-align: right;
+}
+
+footer p {
+    margin-right: 20px;
+    font-style: italic;
+    line-height: 32px;
+}
+
+    @media (max-width: 1080px) {
+        .form-container {
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            width: 75%;
+        }
+    }
