@@ -1,0 +1,8 @@
+<img src="https://picsum.photos/1280" alt="picsum image">
+<div class="card-body">
+    <a th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}">
+        <h4 class="card-title" th:text="${sculpture?.name}">Name</h4></a>
+    <h4 class="card-text" th:text="${sculpture?.calculateCost()}">price</h4>
+    <p class="card-text" th:text="${sculpture?.artist?.name}">Artist Name</p>
+    <p class="card-text" th:text="${sculpture?.style?.name}">Style</p>
+</div>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body>
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+<div class="container text-center mt-3 btn-container">
+    <a class="text-white" th:href="@{/artworks/sculptures/new}">
+        <button class="btn btn-primary">New Sculpture</button>
+    </a>
+</div>
+
+<div class="container-fluid mt-3 artwork-container">
+    <div class="row">
+        <div class="col-6 card sculpture" th:each="sculpture : ${sculptures}" th:insert="artworks/sculptures/_sculpture">
+        </div>
+    </div>
+</div>
+
+<script th:replace="fragments/jqueryImport"></script>
+<script th:replace="fragments/bootstrapMinImport"></script>
+</body>
+</html>
