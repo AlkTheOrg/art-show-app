@@ -79,4 +79,12 @@ public class ArchitectureController {
         Architecture updatedArchitecture = architectures.save(architecture);
         return "redirect:/artworks/architectures/" + updatedArchitecture.getId();
     }
+
+    @GetMapping({"/delete/{architectureId}", "/delete/{architectureId}/"})
+    public String deleteArchitecture(@PathVariable("architectureId") Long architectureId, Model model) {
+        Architecture architecture = architectures.findById(architectureId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid architecture id: " + architectureId));
+        architectures.delete(architecture);
+        return "redirect:/artworks/architectures";
+    }
 }
