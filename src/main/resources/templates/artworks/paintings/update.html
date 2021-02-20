@@ -7,7 +7,8 @@
 
 
     <div class="container form-container">
-        <h2 class="text-center font-weight-bold mb-3" style="color: rgba(0, 44, 8, 1); letter-spacing: 3px;">New Painting</h2>
+        <h2 class="text-center font-weight-bold mb-3" style="color: rgba(0, 44, 8, 1); letter-spacing: 3px;">
+            Update Painting</h2>
         <form th:action="@{/artworks/paintings/update/{id}(id=${painting.id})}" th:object="${painting}" method="post"
               class="artwork-form p-5" id="painting-form" th:insert="/artworks/paintings/_form">
         </form>

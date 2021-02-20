@@ -52,7 +52,7 @@ input[type=number] {
     background-image: url("../images/walden_night_train.png");
 }
 
-#architecture-form-page {
+.architecture-form-page {
     background-image: url("../images/collesseum.png");
     background-size: cover;
     background-repeat: no-repeat;

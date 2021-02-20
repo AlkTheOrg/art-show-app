@@ -59,4 +59,24 @@ public class ArchitectureController {
             return "redirect:/artworks/architectures/" + savedArchitecture.getId();
         }
     }
+
+    @GetMapping({"/update/{architectureId}", "/update/{architectureId}/"})
+    public String showUpdateArchitectureForm(@PathVariable("architectureId") Long architectureId, Model model) {
+        Architecture architecture = architectures.findById(architectureId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid architecture id: " + architectureId));
+        model.addAttribute("architecture", architecture);
+        model.addAttribute("styles", styles.findAll());
+        return "/artworks/architectures/update";
+    }
+
+    @PostMapping({"/update/{architectureId}", "/update/{architectureId}/"})
+    public String updateArchitecture(@PathVariable("architectureId") Long architectureId,
+                                     @Valid Architecture architecture, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            architecture.setId(architectureId);
+            return "artworks/architectures/update";
+        }
+        Architecture updatedArchitecture = architectures.save(architecture);
+        return "redirect:/artworks/architectures/" + updatedArchitecture.getId();
+    }
 }
