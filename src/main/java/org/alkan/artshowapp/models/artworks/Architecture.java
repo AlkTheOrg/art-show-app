@@ -32,27 +32,30 @@ public class Architecture extends Artwork{
 
     @Override
     public int calculateCost() {
-        Style style = getStyle();
-        double uniquePrice = uniquePrice(style);
+        double uniquePrice = uniquePrice();
         int cost = (int) (length * width * height * uniquePrice);
 
         return cost;
     }
 
-    private double uniquePrice(Style style) {
+    private double uniquePrice() {
         double result = 0.0;
-
-        switch (style.getName()) {
-            case ("Gothic"):
-                result = 1.0;
-                break;
-            case ("Baroque"):
-                result = 0.8;
-                break;
-            default:
-                result = 0.6;
-                break;
+        try {
+            switch (getStyle().getName()) {
+                case ("Gothic"):
+                    result = 1.0;
+                    break;
+                case ("Baroque"):
+                    result = 0.8;
+                    break;
+                default:
+                    result = 0.6;
+                    break;
+            }
+        } catch (Exception e){
+            result = 0.6;
         }
+
         return result;
     }
 }

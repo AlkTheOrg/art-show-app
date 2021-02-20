@@ -35,27 +35,28 @@ public class Painting extends Artwork{
 
     @Override
     public int calculateCost() {
-        double uniquePrice = uniquePrice(getStyle());
+        double uniquePrice = uniquePrice();
         int cost = (int) (length * width * uniquePrice);
 
         return cost;
     }
 
-    private double uniquePrice(Style style) {
+    private double uniquePrice() {
         double result = 0.0;
-        String name = null;
-        if (style != null)
-            name = style.getName();
-        switch (name) {
-            case ("Renaissance"):
-                result = 7.0;
-                break;
-            case ("Baroque"):
-                result = 5.5;
-                break;
-            default:
-                result = 4.5;
-                break;
+        try {
+            switch (getStyle().getName()) {
+                case ("Renaissance"):
+                    result = 7.0;
+                    break;
+                case ("Baroque"):
+                    result = 5.5;
+                    break;
+                default:
+                    result = 4.5;
+                    break;
+            }
+        } catch (Exception e) {
+            result = 4.5;
         }
         return result;
     }
