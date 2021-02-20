@@ -82,4 +82,12 @@ public class SculptureController {
         Sculpture updatedSculpture = sculptures.save(sculpture);
         return "redirect:/artworks/sculptures/" + updatedSculpture.getId();
     }
+
+    @GetMapping({"/delete/{sculptureId}", "/delete/{sculptureId}/"})
+    public String deleteSculpture(@PathVariable("sculptureId") Long sculptureId, Model model) {
+        Sculpture sculpture = sculptures.findById(sculptureId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid sculpture id: " + sculptureId));
+        sculptures.delete(sculpture);
+        return "redirect:/artworks/sculptures";
+    }
 }
