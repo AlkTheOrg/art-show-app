@@ -64,7 +64,7 @@ public class PaintingController {
     @GetMapping({"/update/{paintingId}", "/update/{paintingId}/"})
     public String showUpdatePaintingForm(@PathVariable("paintingId") Long paintingId, Model model) {
         Painting painting = paintings.findById(paintingId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + paintingId));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid painting Id:" + paintingId));
 
         model.addAttribute("painting", painting);
         model.addAttribute("styles", styles.findAll());
@@ -80,5 +80,13 @@ public class PaintingController {
         }
         Painting updatedPainting = paintings.save(painting);
         return "redirect:/artworks/paintings/" + updatedPainting.getId();
+    }
+
+    @GetMapping("/delete/{paintingId}")
+    public String deletePainting(@PathVariable("paintingId") Long paintingId, Model model) {
+        Painting painting = paintings.findById(paintingId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid painting id: " + paintingId));
+        paintings.delete(painting);
+        return "redirect:/artworks/paintings";
     }
 }

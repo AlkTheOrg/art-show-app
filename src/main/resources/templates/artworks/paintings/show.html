@@ -9,9 +9,12 @@
                 <div class="card painting w-75 mx-auto" th:insert="artworks/paintings/_painting">
                 </div>
         </div>
-        <div class="container text-center mt-3 btn-container">
+        <div class="container text-center mt-3 btn-container mb-4 mt-2">
                 <a class="text-white" th:href="@{/artworks/paintings/update/{id}(id=${painting.id})}">
-                        <button class="btn btn-primary mb-4 mt-2">Update</button>
+                        <button class="btn btn-primary">Update</button>
+                </a>
+                <a class="text-white" th:href="@{/artworks/paintings/delete/{id}(id=${painting.id})}">
+                        <button class="btn btn-danger">Delete</button>
                 </a>
         </div>
 
