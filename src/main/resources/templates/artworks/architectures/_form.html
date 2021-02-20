@@ -3,13 +3,13 @@
     <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
 </ul>
 <div class="form-group">
-    <label for="painting-name" class="col-form-label">Name</label>
-    <input type="text" id="painting-name" class="form-control" th:field="*{name}">
+    <label for="architecture-name" class="col-form-label">Name</label>
+    <input type="text" id="architecture-name" class="form-control" th:field="*{name}">
 </div>
 
 <div class="form-group">
-    <label for="painting-style" class="col-form-label">Style</label>
-    <select id="painting-style" class="form-control" th:field="*{style.id}">
+    <label for="architecture-style" class="col-form-label">Style</label>
+    <select id="architecture-style" class="form-control" th:field="*{style.id}">
         <option th:each="style : ${styles}" th:value="${style.id}" th:text="${style.name}">Style</option>
     </select>
 </div>
