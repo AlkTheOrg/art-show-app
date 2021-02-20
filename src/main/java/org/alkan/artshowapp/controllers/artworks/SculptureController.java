@@ -61,4 +61,25 @@ public class SculptureController {
             return "redirect:/artworks/sculptures/" + savedSculpture.getId();
         }
     }
+
+    @GetMapping({"/update/{sculptureId}", "/update/{sculptureId}/"})
+    public String showUpdateSculptureForm(@PathVariable("sculptureId") Long sculptureId, Model model) {
+        Sculpture sculpture = sculptures.findById(sculptureId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid sculpture Id: " + sculptureId));
+        model.addAttribute("styles", styles.findAll());
+        model.addAttribute("materials", materials.findAll());
+        model.addAttribute("sculpture", sculpture);
+        return "/artworks/sculptures/update";
+    }
+
+    @PostMapping({"/update/{sculptureId}", "/update/{sculptureId}/"})
+    public String updateSculpture(@PathVariable("sculptureId") Long sculptureId, @Valid Sculpture sculpture,
+                                  BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            sculpture.setId(sculptureId);
+            return "artworks/sculpture/update";
+        }
+        Sculpture updatedSculpture = sculptures.save(sculpture);
+        return "redirect:/artworks/sculptures/" + updatedSculpture.getId();
+    }
 }
