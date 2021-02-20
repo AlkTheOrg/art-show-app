@@ -4,7 +4,11 @@
 
 <body>
     <nav th:replace="fragments/navbar :: #navigation-bar"></nav>
-    <a th:href="@{/artworks/paintings/new}">New Painting</a>
+    <div class="container text-center mt-3 btn-container">
+        <a class="text-white" th:href="@{/artworks/paintings/new}">
+            <button class="btn btn-primary">New Painting</button>
+        </a>
+    </div>
 
     <div class="container-fluid mt-3 artwork-container">
         <div class="row">

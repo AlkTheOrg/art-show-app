@@ -1,40 +1,38 @@
+<!--form tag opening-->
+<ul th:if="${#fields.hasErrors('*')}">
+    <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+</ul>
+<div class="form-group">
+    <label for="painting-name" class="col-form-label">Name</label>
+    <input type="text" id="painting-name" class="form-control" th:field="*{name}">
+</div>
 
-<form th:action="@{/artworks/paintings}" th:object="${painting}" method="post"
-      class="artwork-form p-5" id="painting-form">
-    <ul th:if="${#fields.hasErrors('*')}">
-        <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
-    </ul>
-    <div class="form-group">
-        <label for="painting-name" class="col-form-label">Name</label>
-        <input type="text" id="painting-name" class="form-control" th:field="*{name}">
-    </div>
+<div class="form-group">
+    <label for="painting-style" class="col-form-label">Style</label>
+    <select id="painting-style" class="form-control" th:field="*{style.id}">
+        <option th:each="style : ${styles}" th:value="${style.id}" th:text="${style.name}">Style</option>
+    </select>
+</div>
 
-    <div class="form-group">
-        <label for="painting-style" class="col-form-label">Style</label>
-        <select id="painting-style" class="form-control" th:field="*{style.id}">
-            <option th:each="style : ${styles}" th:value="${style.id}" th:text="${style.name}">Style</option>
-        </select>
+<div class="form-row">
+    <div class="form-group col">
+        <label for="painting-width-input">Width</label>
+        <input type="number" step="0.01" min="0" class="form-control" id="painting-width-input"
+               th:field="*{width}">
     </div>
+    <div class="col">
+        <label for="painting-length-input">Length</label>
+        <input type="number" step="0.01" min="0" class="form-control" id="painting-length-input"
+               th:field="*{length}">
+    </div>
+</div>
 
-    <div class="form-row">
-        <div class="form-group col">
-            <label for="painting-width-input">Width</label>
-            <input type="number" step="0.01" min="0" class="form-control" id="painting-width-input"
-                   th:field="*{width}">
-        </div>
-        <div class="col">
-            <label for="painting-length-input">Length</label>
-            <input type="number" step="0.01" min="0" class="form-control" id="painting-length-input"
-                   th:field="*{length}">
-        </div>
+<div class="form-group">
+    <div class="mt-2 container text-center">
+        <button
+                th:with="text=${painting['new']} ? 'Create' : 'Edit'"
+                class="btn btn-light btn-lg mt-4" type="submit" th:text="${text}">Add
+            Painting</button>
     </div>
-
-    <div class="form-group">
-        <div class="mt-2 container text-center">
-            <button
-                    th:with="text=${painting['new']} ? 'Create' : 'Edit'"
-                    class="btn btn-light btn-lg mt-4" type="submit" th:text="${text}">Add
-                Painting</button>
-        </div>
-    </div>
-</form>
+</div>
+<!--form tag closing-->

@@ -3,12 +3,17 @@
 <head th:replace="fragments/mainHtmlTag"></head>
 
 <body class="">
-<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+        <nav th:replace="fragments/navbar :: #navigation-bar"></nav>
 
-<div class="container mt-3 artwork-container">
-        <div class="card painting w-75 mx-auto" th:insert="artworks/paintings/_painting">
+        <div class="container mt-3 artwork-container">
+                <div class="card painting w-75 mx-auto" th:insert="artworks/paintings/_painting">
+                </div>
         </div>
-</div>
+        <div class="container text-center mt-3 btn-container">
+                <a class="text-white" th:href="@{/artworks/paintings/update/{id}(id=${painting.id})}">
+                        <button class="btn btn-primary mb-4 mt-2">Update</button>
+                </a>
+        </div>
 
 <script th:replace="fragments/jqueryImport"></script>
 <script th:replace="fragments/bootstrapMinImport"></script>

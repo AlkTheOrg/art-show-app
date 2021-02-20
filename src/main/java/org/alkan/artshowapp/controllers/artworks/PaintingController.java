@@ -42,7 +42,7 @@ public class PaintingController {
 
 
     @GetMapping({"/new", "/new/"})
-    public String initCreationForm(Model model) {
+    public String showCreationForm(Model model) {
         model.addAttribute("painting", new Painting());
         model.addAttribute("styles", styles.findAll());
         return "artworks/paintings/new";
@@ -53,12 +53,32 @@ public class PaintingController {
         if (result.hasErrors()){
             for(ObjectError err : result.getAllErrors())
                 System.out.println(err.getDefaultMessage());
-            return "redirect:/artworks/paintings/new";
+            return "artworks/paintings/new";
         }
         else {
-//            styles.save(painting.getStyle());
             Painting savedPainting = paintings.save(painting);
             return "redirect:/artworks/paintings/" + savedPainting.getId();
         }
+    }
+
+    @GetMapping({"/update/{paintingId}", "/update/{paintingId}/"})
+    public String showUpdatePaintingForm(@PathVariable("paintingId") Long paintingId, Model model) {
+        Painting painting = paintings.findById(paintingId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + paintingId));
+
+        model.addAttribute("painting", painting);
+        model.addAttribute("styles", styles.findAll());
+        return "artworks/paintings/update";
+    }
+
+    @PostMapping({"/update/{paintingId}", "/update/{paintingId}/"})
+    public String updatePainting(@PathVariable("paintingId") Long paintingId, @Valid Painting painting,
+                                 BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            painting.setId(paintingId);
+            return "artworks/paintings/update";
+        }
+        Painting updatedPainting = paintings.save(painting);
+        return "redirect:/artworks/paintings/" + updatedPainting.getId();
     }
 }
