@@ -48,7 +48,7 @@ input[type=number] {
     -moz-appearance:textfield;
 }
 
-#painting-form-page {
+.painting-form-page {
     background-image: url("../images/walden_night_train.png");
 }
 
