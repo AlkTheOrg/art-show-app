@@ -4,6 +4,7 @@ import org.alkan.artshowapp.repositories.artworks.SculptureRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/artworks/sculptures")
@@ -20,5 +21,11 @@ public class SculptureController {
     public String listSculptures(Model model) {
         model.addAttribute("sculptures", sculptures.findAll());
         return "artworks/sculptures/index";
+    }
+
+    @GetMapping({"/{sculptureId}", "/{sculptureId}/"})
+    public String showPainting(@PathVariable("sculptureId") Long sculptureId, Model model) {
+        model.addAttribute("sculpture", sculptures.findById(sculptureId).orElse(null));
+        return "/artworks/sculptures/show";
     }
 }
