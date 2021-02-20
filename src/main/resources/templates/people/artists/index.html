@@ -2,26 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/mainHtmlTag"></head>
 
-<body>
+<body style="background: #222;">
 <nav th:replace="fragments/navbar :: #navigation-bar"></nav>
 
-<div class="container-fluid mt-3 artwork-container">
-    <div class="row">
-        <div class="col-6 card painting" th:each="artist : ${artists}">
-            <img src="https://picsum.photos/1280" alt="picsum image">
-            <div class="card-body">
-                <h4 class="card-title" th:text="${artist?.name}">Name</h4>
-                <h4 class="card-title" th:text="${artist?.bornYear.toString()}">Born</h4>
-                <h4 class="card-title" th:text="${artist?.deathYear.toString()}">Death</h4>
-                <h4 class="card-title" th:text="${artist?.nationality}">Nationality</h4>
-                <h5 th:each="period : ${artist.periods}">
-                    <p th:text="${period.name}">Period</p>
-                </h5>
-                <!--       PAINTINGS and SCULPTURES HERE         -->
-            </div>
-        </div>
-    </div>
-</div>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Born</th>
+            <th scope="col">Nationality</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="artist : ${artists}">
+            <th scope="row" th:text="${artistStat.count}">1</th>
+            <th><a th:text="${artist.name}" th:href="@{/people/artists/{id}(id=${artist.id})}">Name</a></th>
+            <th th:text="${artist.bornYear}">Born</th>
+            <th th:text="${artist.nationality}">Nationality</th>
+        </tr>
+        </tbody>
+    </table>
 
 <script th:replace="fragments/jqueryImport"></script>
 <script th:replace="fragments/bootstrapMinImport"></script>
