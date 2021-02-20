@@ -1,21 +1,30 @@
 package org.alkan.artshowapp.controllers.artworks;
 
+import org.alkan.artshowapp.models.artworks.Architecture;
+import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @RequestMapping("/artworks/architectures")
 @Controller
 public class ArchitectureController {
 
     private final ArchitectureRepository architectures;
+    private final StyleRepository styles;
 
-    public ArchitectureController(ArchitectureRepository architectures) {
+    public ArchitectureController(ArchitectureRepository architectures, StyleRepository styles) {
         this.architectures = architectures;
+        this.styles = styles;
     }
 
     @GetMapping({"", "/", "/index", "/index/"})
@@ -29,5 +38,25 @@ public class ArchitectureController {
         ModelAndView mav = new ModelAndView("/artworks/architectures/show");
         mav.addObject(architectures.findById(architectureId).orElse(null));
         return mav;
+    }
+
+    @GetMapping({"/new", "/new/"})
+    public String showCreationForm(Model model) {
+        model.addAttribute("architecture", new Architecture());
+        model.addAttribute("styles", styles.findAll());
+        return "artworks/architectures/new";
+    }
+
+    @PostMapping({"", "/"})
+    public String processCreationForm(@Valid Architecture architecture, BindingResult result) {
+        if (result.hasErrors()) {
+            for(ObjectError err : result.getAllErrors())
+                System.out.println(err.getDefaultMessage());
+            return "artworks/architectures/new";
+        }
+        else {
+            Architecture savedArchitecture = architectures.save(architecture);
+            return "redirect:/artworks/architectures/" + savedArchitecture.getId();
+        }
     }
 }
