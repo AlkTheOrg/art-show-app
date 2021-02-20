@@ -10,12 +10,12 @@
     <h2 class="text-center font-weight-bold mb-3" style="color: rgba(0, 44, 8, 1); letter-spacing: 3px;">
         New Sculpture</h2>
     <form th:action="@{/artworks/sculptures}" th:object="${sculpture}" method="post"
-          class="artwork-form p-5" id="sculpture-form" th:insert="/artworks/sculptures/_form">
+          class="artwork-form p-5" id="new-sculpture-form" th:insert="/artworks/sculptures/_form">
     </form>
 </div>
 
 <footer>
-    <p class="col"><strong></strong></p>
+    <p class="col"><strong>Test text</strong></p>
 </footer>
 
 <script th:replace="fragments/jqueryImport"></script>
