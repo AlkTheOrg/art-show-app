@@ -58,6 +58,12 @@ input[type=number] {
     background-repeat: no-repeat;
 }
 
+.sculpture-form-page {
+    background-image: url("../images/sculpture-wp.jpg");
+    background-size: cover;
+    background-position: left;
+}
+
 .form-container {
     margin-top: 8rem;
     width: 30%;
