@@ -60,8 +60,9 @@ input[type=number] {
 
 .sculpture-form-page {
     background-image: url("../images/sculpture-wp.jpg");
-    background-size: cover;
-    background-position: left;
+    /*background-size: cover;*/
+    /*background-position: left;*/
+    /*background-repeat: no-repeat;*/
 }
 
 .form-container {
@@ -80,6 +81,22 @@ input[type=number] {
 
 
 
+.person-photo {
+    width: 50%;
+    height: 100%;
+    border: solid 1px #AAAAAA;
+    border-radius: 5%;
+}
+
+.person-container {
+    margin-top: 8rem;
+}
+
+
+    /* ******* ********  ********  ******** * */
+                    /* FOOTER */
+    /* ******* ********  ********  ******** * */
+
 footer {
     width: 100%;
     bottom: 0;
@@ -96,6 +113,10 @@ footer p {
     font-style: italic;
     line-height: 32px;
 }
+
+    /* ******* ********  ********  ******** * */
+                /* Media Queries */
+    /* ******* ********  ********  ******** * */
 
     @media (max-width: 1080px) {
         .form-container {

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
+import org.alkan.artshowapp.repositories.people.ArtistRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,12 @@ public class PaintingController {
 
     private final PaintingRepository paintings;
     private final StyleRepository styles;
+    private final ArtistRepository artists;
 
-    public PaintingController(PaintingRepository paintings, StyleRepository styles) {
+    public PaintingController(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists) {
         this.paintings = paintings;
         this.styles = styles;
+        this.artists = artists;
     }
 
     @GetMapping({"", "/", "/index", "/index/"})
@@ -45,6 +48,7 @@ public class PaintingController {
     public String showCreationForm(Model model) {
         model.addAttribute("painting", new Painting());
         model.addAttribute("styles", styles.findAll());
+        model.addAttribute("artists", artists.findAll());
         return "artworks/paintings/new";
     }
 
@@ -68,6 +72,7 @@ public class PaintingController {
 
         model.addAttribute("painting", painting);
         model.addAttribute("styles", styles.findAll());
+        model.addAttribute("artists", artists.findAll());
         return "artworks/paintings/update";
     }
 
