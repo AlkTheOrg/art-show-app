@@ -2,6 +2,9 @@
 <div class="card-body">
     <a th:href="@{/artworks/architectures/{id}(id=${architecture.id})}"><h4 class="card-title" th:text="${architecture?.name}">Name</h4></a>
     <h4 class="card-text" th:text="${architecture?.calculateCost()}">price</h4>
-    <p class="card-text" th:text="${architecture?.architect?.name}">Artist Name</p>
+    <p class="card-text" th:if="${architecture.architect}">
+        <a th:href="@{/people/architects/{id}(id=${architecture.architect.id})}"
+           th:text="${architecture.architect?.name}"></a>
+    </p>
     <p class="card-text" th:text="${architecture?.style?.name}">Style</p>
 </div>

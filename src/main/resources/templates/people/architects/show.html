@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body style="background: #232323;">
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+
+    <div class="container person-container">
+        <img src="https://picsum.photos/1280" alt="picsum image" class="person-photo float-left mr-2">
+        <div class="container text-white text-center">
+            <h1 th:text="${architect.name.toUpperCase()}">Name</h1>
+
+            <br>
+
+            <h3 th:with="alive=${architect.deathYear == null}">
+                <p th:if="${!alive}" th:text="${architect.bornYear} + ' - ' + ${architect.deathYear}"></p>
+                <p th:if="${alive}" th:text="${architect.bornYear} + ' - Today'"></p>
+            </h3>
+
+            <h3 th:text="${architect.nationality}">Nationality</h3>
+
+            <ul th:unless="${architect.architectures.isEmpty()}">
+                <h4>Architectures</h4>
+                <li th:each="architecture : ${architect.architectures}">
+                    <a th:href="@{/artworks/architectures/{id}(id=${architecture.id})}"
+                       th:text="${architecture.name}">Sculpture Name</a>
+                </li>
+            </ul>
+
+                    <!--   No periods on Architect at the current design. -->
+    <!--        <ul th:unless="${architect.periods.isEmpty()}">-->
+    <!--            <h4>Periods</h4>-->
+    <!--            <li th:each="period : ${architect.periods}">-->
+    <!--                <p th:text="${period.name}"></p>-->
+    <!--            </li>-->
+    <!--        </ul>-->
+        </div>
+    </div>
+
+    <div class="container text-center mt-3 btn-container mb-4 mt-2">
+        <a class="text-white" th:href="@{/people/architects/update/{id}(id=${architect.id})}">
+            <button class="btn btn-primary">Update</button>
+        </a>
+        <a class="text-white" th:href="@{/people/architects/delete/{id}(id=${architect.id})}">
+            <button class="btn btn-danger">Delete</button>
+        </a>
+    </div>
+
+<script th:replace="fragments/jqueryImport"></script>
+<script th:replace="fragments/bootstrapMinImport"></script>
+</body>
+</html>
