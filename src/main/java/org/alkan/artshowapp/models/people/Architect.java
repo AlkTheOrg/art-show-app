@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.alkan.artshowapp.models.artworks.Architecture;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,6 +21,6 @@ import java.util.Set;
 @Table
 public class Architect extends Person{
 
-    @OneToMany(mappedBy = "architect")
+    @OneToMany(mappedBy = "architect", cascade = CascadeType.ALL)
     private Set<Architecture> architectures = new HashSet<>();
 }
