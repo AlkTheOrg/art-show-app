@@ -4,6 +4,7 @@ import org.alkan.artshowapp.models.artworks.Sculpture;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.MaterialRepository;
 import org.alkan.artshowapp.repositories.artworks.SculptureRepository;
+import org.alkan.artshowapp.repositories.people.ArtistRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,11 +23,13 @@ public class SculptureController {
     private final SculptureRepository sculptures;
     private final StyleRepository styles;
     private final MaterialRepository materials;
+    private final ArtistRepository artists;
 
-    public SculptureController(SculptureRepository sculptures, StyleRepository styles, MaterialRepository materials) {
+    public SculptureController(SculptureRepository sculptures, StyleRepository styles, MaterialRepository materials, ArtistRepository artists) {
         this.sculptures = sculptures;
         this.styles = styles;
         this.materials = materials;
+        this.artists = artists;
     }
 
     @GetMapping({"", "/", "/index", "/index/"})
@@ -46,6 +49,7 @@ public class SculptureController {
         model.addAttribute("styles", styles.findAll());
         model.addAttribute("materials", materials.findAll());
         model.addAttribute("sculpture", new Sculpture());
+        model.addAttribute("artists", artists.findAll());
         return "/artworks/sculptures/new";
     }
 
@@ -69,6 +73,7 @@ public class SculptureController {
         model.addAttribute("styles", styles.findAll());
         model.addAttribute("materials", materials.findAll());
         model.addAttribute("sculpture", sculpture);
+        model.addAttribute("artists", artists.findAll());
         return "/artworks/sculptures/update";
     }
 

@@ -14,6 +14,13 @@
     </select>
 </div>
 
+<div class="form-group">
+    <label for="sculpture-artist" class="col-form-label">Artist</label>
+    <select id="sculpture-artist" class="form-control" th:field="*{artist.id}">
+        <option th:each="artist : ${artists}" th:value="${artist.id}" th:text="${artist.name}">Style</option>
+    </select>
+</div>
+
 <div class="form-row">
     <div class="form-group col">
         <label for="sculpture-weight-input">Weight</label>

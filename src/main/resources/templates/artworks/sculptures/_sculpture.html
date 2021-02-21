@@ -3,6 +3,8 @@
     <a th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}">
         <h4 class="card-title" th:text="${sculpture?.name}">Name</h4></a>
     <h4 class="card-text" th:text="${sculpture?.calculateCost()}">price</h4>
-    <p class="card-text" th:text="${sculpture?.artist?.name}">Artist Name</p>
+    <p class="card-text" th:if="${sculpture.artist}">
+        <a th:href="@{/people/artists/{id}(id=${sculpture.artist.id})}" th:text="${sculpture.artist?.name}"></a>
+    </p>
     <p class="card-text" th:text="${sculpture?.style?.name}">Style</p>
 </div>
