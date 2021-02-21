@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body style="background: #222;">
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+
+<table class="table table-striped table-dark">
+    <thead>
+    <tr class="text-center">
+        <th scope="col">#</th>
+        <th scope="col">Architect</th>
+        <th scope="col">Born</th>
+        <th scope="col">Nationality</th>
+        <th scope="col" class="text-center">Number of Architectures</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="architect : ${architects}" class="text-center">
+        <th scope="row" th:text="${architectStat.count}">1</th>
+        <th><a th:text="${architect.name}" th:href="@{/people/architects/{id}(id=${architect.id})}">Name</a></th>
+        <th th:text="${architect.bornYear}">Born</th>
+        <th th:text="${architect.nationality}">Nationality</th>
+        <th th:text="${architect.architectures.size()}">Num of architectures</th>
+    </tr>
+    </tbody>
+</table>
+
+<div class="container text-center mt-3 btn-container">
+    <a class="text-white" th:href="@{/people/architects/new}">
+        <button class="btn btn-primary">New Architect</button>
+    </a>
+</div>
+
+<script th:replace="fragments/jqueryImport"></script>
+<script th:replace="fragments/bootstrapMinImport"></script>
+</body>
+</html>
