@@ -74,4 +74,12 @@ public class ArchitectController {
         Architect updatedArchitect = architects.save(architect);
         return "redirect:/people/architects/" + updatedArchitect.getId();
     }
+
+    @GetMapping({"/delete/{architectId}", "/delete/{architectId}/"})
+    public String deleteArchitect(@PathVariable Long architectId) {
+        Architect architect = architects.findById(architectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + architectId));
+        architects.delete(architect);
+        return "redirect:/people/architects";
+    }
 }
