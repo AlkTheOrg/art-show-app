@@ -72,7 +72,10 @@ input[type=number] {
     background-image: url("../images/edvard-munch4.jpg");
     background-position: center;
     /*background-size: cover;*/
+}
 
+.architect-form-page {
+    background-image: url("../images/le-corbusier.png");
 }
 
 .form-container {
@@ -131,6 +134,9 @@ footer p {
     @media (max-width: 1080px) {
         .form-container {
             width: 50%;
+        }
+        .architect-form-page {
+            background-image: url("../images/le-corbusier3.jpg");
         }
     }
 

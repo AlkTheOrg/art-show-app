@@ -5,9 +5,11 @@ import org.alkan.artshowapp.models.Style;
 import org.alkan.artshowapp.models.artworks.Architecture;
 import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.models.artworks.Sculpture;
+import org.alkan.artshowapp.models.people.Architect;
 import org.alkan.artshowapp.models.people.Artist;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
 import org.alkan.artshowapp.repositories.artworks.SculptureRepository;
+import org.alkan.artshowapp.repositories.people.ArchitectRepository;
 import org.alkan.artshowapp.repositories.people.ArtistRepository;
 import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
 import org.alkan.artshowapp.repositories.PeriodRepository;
@@ -28,14 +30,16 @@ public class DataBootstrapper implements CommandLineRunner {
     private final PeriodRepository periods;
     private final ArchitectureRepository architectures;
     private final SculptureRepository sculptures;
+    private final ArchitectRepository architects;
 
-    public DataBootstrapper(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists, PeriodRepository periods, ArchitectureRepository architectures, SculptureRepository sculptures) {
+    public DataBootstrapper(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists, PeriodRepository periods, ArchitectureRepository architectures, SculptureRepository sculptures, ArchitectRepository architects) {
         this.paintings = paintings;
         this.styles = styles;
         this.artists = artists;
         this.periods = periods;
         this.architectures = architectures;
         this.sculptures = sculptures;
+        this.architects = architects;
     }
 
     @Override
@@ -79,10 +83,10 @@ public class DataBootstrapper implements CommandLineRunner {
         periods2.add(period1);
         periods2.add(period2);
 
-        artists.save(Artist.builder().id(1L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan").periods(periods1).build());
-        artists.save(Artist.builder().id(2L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan").periods(periods2).build());
-        artists.save(Artist.builder().id(3L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan").periods(periods1).build());
-        artists.save(Artist.builder().id(4L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan").periods(periods2).build());
+        artists.save(Artist.builder().id(1L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan1").periods(periods1).build());
+        artists.save(Artist.builder().id(2L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan2").periods(periods2).build());
+        artists.save(Artist.builder().id(3L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan3").periods(periods1).build());
+        artists.save(Artist.builder().id(4L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan4").periods(periods2).build());
 
         Artist artist1 = artists.findById(1L).orElse(null);
         Artist artist2 = artists.findById(2L).orElse(null);
@@ -123,6 +127,32 @@ public class DataBootstrapper implements CommandLineRunner {
             sculpture.setName("Arch" + i);
             sculpture.setWeight((int) (500 * i));
             sculptures.save(sculpture);
+        }
+
+
+
+        Set<Architecture> allArchitectures = new HashSet<>();
+        for(Architecture a : architectures.findAll())
+            allArchitectures.add(a);
+
+        Architect mainArch = new Architect();
+        mainArch.setName("Main Arch");
+        mainArch.setNationality("Norway");
+//        mainArch.setArchitectures(allArchitectures);
+        Architect savedArchitect = architects.save(mainArch);
+        for(Architecture a : allArchitectures) {
+            a.setArchitect(savedArchitect);
+            architectures.save(a);
+        }
+        mainArch.setArchitectures(allArchitectures);
+        savedArchitect = architects.save(mainArch);
+
+
+        Architect architect;
+        for (long i = 1; i<10; i++) {
+            architect = new Architect();
+            architect.setName("Architect" + i);
+            architects.save(architect);
         }
     }
 }
