@@ -22,9 +22,9 @@ public class Period extends BaseEntity {
     String name;
 
     @ManyToMany
-    @JoinTable(name = "artist_period",
-            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "period_id",
+    @JoinTable(name = "period_artist",
+            joinColumns = @JoinColumn(name = "period_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id",
                     referencedColumnName = "id"))
     private Set<Artist> artists = new HashSet<>();
 }
