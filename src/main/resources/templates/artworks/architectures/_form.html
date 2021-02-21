@@ -14,6 +14,13 @@
     </select>
 </div>
 
+<div class="form-group">
+    <label for="painting-architect" class="col-form-label">Architect</label>
+    <select id="painting-architect" class="form-control" th:field="*{architect.id}">
+        <option th:each="architect : ${architects}" th:value="${architect.id}" th:text="${architect.name}">Style</option>
+    </select>
+</div>
+
 <div class="form-row">
     <div class="form-group col">
         <label for="architecture-width-input">Width</label>
@@ -26,8 +33,8 @@
                th:field="*{length}">
     </div>
     <div class="col">
-        <label for="architecture-length-input">Length</label>
-        <input type="number" step="0.01" min="0" class="form-control" id="architecture-length-input"
+        <label for="architecture-height-input">Length</label>
+        <input type="number" step="0.01" min="0" class="form-control" id="architecture-height-input"
                th:field="*{height}">
     </div>
 </div>

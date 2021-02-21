@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body class="form-page architect-form-page">
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+
+<div class="container form-container">
+    <h2 class="text-center font-weight-bold mb-3"
+        style="color: rgba(250, 250, 250, 1); letter-spacing: 3px;">New Architect</h2>
+    <form th:action="@{/people/architects}" th:object="${architect}" method="post"
+          class="people-form p-5" id="new-architect-form" th:insert="/people/architects/_form">
+    </form>
+</div>
+
+<footer>
+    <p class="col"><strong>Test footer text</strong></p>
+</footer>
+
+<script th:replace="fragments/jqueryImport"></script>
+<script th:replace="fragments/bootstrapMinImport"></script>
+</body>
+</html>

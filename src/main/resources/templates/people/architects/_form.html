@@ -1,0 +1,47 @@
+<!--form tag opening-->
+<ul th:if="${#fields.hasErrors('*')}">
+    <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
+</ul>
+
+<div class="form-group">
+    <label for="architect-name-input" class="col-form-label">Name</label>
+    <input type="text" id="architect-name-input" class="form-control" th:field="*{name}">
+</div>
+
+<div class="form-row" th:with="thisYear = ${#dates.year(#dates.createNow())}">
+    <div class="form-group col">
+        <label for="architect-born-input">Born <small>(yyyy)</small></label>
+        <input type="number" step="1" min="-2000" th:max="${thisYear}"
+               class="form-control" id="architect-born-input" th:field="*{bornYear}">
+    </div>
+    <div class="form-group col">
+        <label for="architect-death-input">Died <small>(yyyy)</small></label>
+        <input type="number" step="1" min="-2000" th:max="${thisYear}"
+               class="form-control" id="architect-death-input" th:field="*{deathYear}">
+    </div>
+    <div class="form-check-inline mt-2 ml-2">
+        <input type="checkbox" class="form-check-input" name="architect-is-alive" id="architect-alive-input">
+        <label for="architect-alive-input" class="form-check-label">Alive</label>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="architect-nationality-input" class="col-form-label">Nationality</label>
+    <input type="text" id="architect-nationality-input" class="form-control" th:field="*{nationality}">
+</div>
+
+                <!-- No period relation exists in the current version. -->
+<!--<div class="form-check-inline" th:each="period : ${periods}">-->
+<!--    <input type="checkbox" class="form-check-input" name="periods" th:value="${period.id}"-->
+<!--           th:id="'period'+${periodStat.count}">-->
+<!--    <label th:for="'period'+${periodStat.count}" th:text="${period.name}"></label>-->
+<!--</div>-->
+
+<div class="form-group">
+    <div class="mt-2 container text-center">
+        <button
+                th:with="text=${architect['new']} ? 'Create' : 'Edit'"
+                class="btn btn-light btn-lg mt-4" type="submit" th:text="${text}">Add
+            Architect</button>
+    </div>
+</div>

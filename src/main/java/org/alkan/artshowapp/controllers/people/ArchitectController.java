@@ -4,9 +4,11 @@ import org.alkan.artshowapp.models.people.Architect;
 import org.alkan.artshowapp.repositories.people.ArchitectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequestMapping("/people/architects")
 @Controller
@@ -30,5 +32,27 @@ public class ArchitectController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + architectId));
         model.addAttribute("architect", architect);
         return "people/architects/show";
+    }
+
+    @GetMapping({"/new", "/new/"})
+    public String initCreationForm(Model model) {
+        model.addAttribute("architect", new Architect());
+        return "people/architects/new";
+    }
+
+    @PostMapping({"", "/"})
+    public String processCreationForm(@Valid Architect architect, BindingResult result,
+                  @RequestParam(name = "architect-is-alive", defaultValue = "off") String isAlive) {
+        if (result.hasErrors()) {
+            for(ObjectError err : result.getAllErrors())
+                System.out.println(err.getDefaultMessage());
+            return "people/architects/new";
+        }
+        else {
+            if(isAlive.equals("on"))
+                architect.setDeathYear(null);
+            Architect savedArchitect = architects.save(architect);
+            return "redirect:/people/architects/" + savedArchitect.getId();
+        }
     }
 }

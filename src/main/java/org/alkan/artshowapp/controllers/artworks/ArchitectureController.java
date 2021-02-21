@@ -3,6 +3,7 @@ package org.alkan.artshowapp.controllers.artworks;
 import org.alkan.artshowapp.models.artworks.Architecture;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
+import org.alkan.artshowapp.repositories.people.ArchitectRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,10 +22,12 @@ public class ArchitectureController {
 
     private final ArchitectureRepository architectures;
     private final StyleRepository styles;
+    private final ArchitectRepository architects;
 
-    public ArchitectureController(ArchitectureRepository architectures, StyleRepository styles) {
+    public ArchitectureController(ArchitectureRepository architectures, StyleRepository styles, ArchitectRepository architects) {
         this.architectures = architectures;
         this.styles = styles;
+        this.architects = architects;
     }
 
     @GetMapping({"", "/", "/index", "/index/"})
@@ -44,6 +47,7 @@ public class ArchitectureController {
     public String showCreationForm(Model model) {
         model.addAttribute("architecture", new Architecture());
         model.addAttribute("styles", styles.findAll());
+        model.addAttribute("architects", architects.findAll());
         return "artworks/architectures/new";
     }
 
@@ -66,6 +70,7 @@ public class ArchitectureController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid architecture id: " + architectureId));
         model.addAttribute("architecture", architecture);
         model.addAttribute("styles", styles.findAll());
+        model.addAttribute("architects", architects.findAll());
         return "/artworks/architectures/update";
     }
 
