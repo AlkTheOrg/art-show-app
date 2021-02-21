@@ -35,4 +35,8 @@ public class Artist extends Person {
         super(id, name, bornYear, deathYear, nationality);
         this.periods = periods;
     }
+
+    public int getNumOfArtworks() {
+        return paintings.size() + sculptures.size();
+    }
 }
