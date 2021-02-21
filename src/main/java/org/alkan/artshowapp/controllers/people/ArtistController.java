@@ -1,6 +1,7 @@
 package org.alkan.artshowapp.controllers.people;
 
 import lombok.extern.slf4j.Slf4j;
+import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.models.people.Artist;
 import org.alkan.artshowapp.repositories.PeriodRepository;
 import org.alkan.artshowapp.repositories.people.ArtistRepository;
@@ -82,5 +83,14 @@ public class ArtistController {
         }
         Artist updatedArtist = artists.save(artist);
         return "redirect:/people/artists/" + updatedArtist.getId();
+    }
+
+    @GetMapping("/delete/{artistId}")
+    public String deletePainting(@PathVariable("artistId") Long artistId, Model model) {
+        Artist artist = artists.findById(artistId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid painting id: " + artistId));
+        artist.getPeriods().forEach((period) -> period.getArtists().remove(artist));
+        artists.delete(artist);
+        return "redirect:/people/artists";
     }
 }
