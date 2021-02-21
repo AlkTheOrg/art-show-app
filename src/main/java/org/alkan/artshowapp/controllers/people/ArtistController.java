@@ -63,4 +63,24 @@ public class ArtistController {
             return "redirect:/people/artists/" + savedArtist.getId();
         }
     }
+
+    @GetMapping({"/update/{artistId}", "/update/{artistId}/"})
+    public String showUpdateArtistForm(@PathVariable("artistId") Long artistId, Model model) {
+        Artist artist = artists.findById(artistId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + artistId));
+        model.addAttribute("periods", periods.findAll());
+        model.addAttribute("artist", artist);
+        return "people/artists/update";
+    }
+
+    @PostMapping({"/update/{artistId}", "/update/{artistId}/"})
+    public String processUpdateArtistForm(@PathVariable("artistId") Long artistId,
+                              @Valid Artist artist, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            artist.setId(artistId);
+            return "people/artists/update";
+        }
+        Artist updatedArtist = artists.save(artist);
+        return "redirect:/people/artists/" + updatedArtist.getId();
+    }
 }
