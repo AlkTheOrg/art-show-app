@@ -10,11 +10,14 @@
         <div class="container text-white text-center">
             <h1 th:text="${artist.name.toUpperCase()}">Name</h1>
             <br>
-            <h3 th:with="died=${#strings.isEmpty(artist.deathYear)}">
-                <p th:if="${died}" th:text="${artist.bornYear} + ' - ' + ${artist.deathYear}"></p>
-                <p th:if="${!died}" th:text="${artist.bornYear} + ' - Today'"></p>
+
+            <h3 th:with="alive=${artist.deathYear == null}">
+                <p th:if="${!alive}" th:text="${artist.bornYear} + ' - ' + ${artist.deathYear}"></p>
+                <p th:if="${alive}" th:text="${artist.bornYear} + ' - Today'"></p>
             </h3>
+
             <h3 th:text="${artist.nationality}">Nationality</h3>
+
             <ul th:unless="${artist.paintings.isEmpty()}">
                 <h4>Paintings</h4>
                 <li th:each="painting : ${artist.paintings}">
@@ -22,11 +25,19 @@
                        th:text="${painting.name}">Painting Name</a>
                 </li>
             </ul>
+
             <ul th:unless="${artist.sculptures.isEmpty()}">
                 <h4>Sculptures</h4>
                 <li th:each="sculpture : ${artist.sculptures}">
                     <a th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}"
                        th:text="${sculpture.name}">Sculpture Name</a>
+                </li>
+            </ul>
+
+            <ul th:unless="${artist.periods.isEmpty()}">
+                <h4>Periods</h4>
+                <li th:each="period : ${artist.periods}">
+                    <p th:text="${period.name}"></p>
                 </li>
             </ul>
         </div>
