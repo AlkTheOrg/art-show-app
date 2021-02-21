@@ -55,4 +55,23 @@ public class ArchitectController {
             return "redirect:/people/architects/" + savedArchitect.getId();
         }
     }
+
+    @GetMapping({"/update/{architectId}", "/update/{architectId}/"})
+    public String showUpdateArchitectForm(Model model, @PathVariable Long architectId) {
+        Architect architect = architects.findById(architectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + architectId));
+        model.addAttribute("architect", architect);
+        return "people/architects/update";
+    }
+
+    @PostMapping({"/update/{architectId}", "/update/{architectId}/"})
+    public String updateArchitect(@PathVariable Long architectId, @Valid Architect architect,
+                                  BindingResult result) {
+        if (result.hasErrors()) {
+            architect.setId(architectId);
+            return "people/architects/update";
+        }
+        Architect updatedArchitect = architects.save(architect);
+        return "redirect:/people/architects/" + updatedArchitect.getId();
+    }
 }
