@@ -108,13 +108,6 @@ ul {
 }
 
     /* ******* ********  ********  ******** * */
-                 /* PAINTINGS */
-    /* ******* ********  ********  ******** * */
-.painting {
-    /*border: none;*/
-}
-
-    /* ******* ********  ********  ******** * */
                     /* FORMS */
     /* ******* ********  ********  ******** * */
 
@@ -184,6 +177,18 @@ input[type=number] {
 
 .person-container {
     margin-top: 8rem;
+}
+
+.dark-bg {
+    background: #222;
+}
+
+logo {
+    transition: .2s;
+}
+
+#logo:hover {
+    filter: brightness(1.2);
 }
 
 

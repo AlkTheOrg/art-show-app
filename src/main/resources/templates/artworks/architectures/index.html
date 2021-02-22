@@ -2,21 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/mainHtmlTag"></head>
 
-<body>
+<body class="dark-bg">
 <nav th:replace="fragments/navbar :: #navigation-bar"></nav>
-<div class="container text-center mt-3 btn-container">
-    <a class="text-white" th:href="@{/artworks/architectures/new}">
-        <button class="btn btn-primary">New Architecture</button>
-    </a>
-</div>
 
-<div class="container-fluid mt-3 artwork-container">
-    <div class="row">
-        <div class="col-6 card architecture" th:each="architecture : ${architectures}"
-             th:insert="artworks/architectures/_architecture">
-        </div>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Architect</th>
+            <th scope="col">Style</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="architecture : ${architectures}" class="text-center">
+            <th scope="row" th:text="${architectureStat.count}">1</th>
+            <th><a th:text="${architecture.name}"
+                   th:href="@{/artworks/architectures/{id}(id=${architecture.id})}">Name</a></th>
+            <th><a th:text="${architecture.architect?.name}"
+                   th:href="@{/people/artists/{id}(id=${architecture.architect?.id})}"></a></th>
+            <th scope="row" th:text="${architecture.style?.name}"></th>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="container text-center mt-3 btn-container">
+        <a class="text-white" th:href="@{/artworks/architectures/new}">
+            <button class="btn btn-primary">New Architecture</button>
+        </a>
     </div>
-</div>
 
 <script th:replace="fragments/jqueryImport"></script>
 <script th:replace="fragments/bootstrapMinImport"></script>

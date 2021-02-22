@@ -2,20 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/mainHtmlTag"></head>
 
-<body>
+<body class="dark-bg">
 <nav th:replace="fragments/navbar :: #navigation-bar"></nav>
-<div class="container text-center mt-3 btn-container">
-    <a class="text-white" th:href="@{/artworks/sculptures/new}">
-        <button class="btn btn-primary">New Sculpture</button>
-    </a>
-</div>
 
-<div class="container-fluid mt-3 artwork-container">
-    <div class="row">
-        <div class="col-6 card sculpture" th:each="sculpture : ${sculptures}" th:insert="artworks/sculptures/_sculpture">
-        </div>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Style</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sculpture : ${sculptures}" class="text-center">
+            <th scope="row" th:text="${sculptureStat.count}">1</th>
+            <th><a th:text="${sculpture.name}" th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}">Name</a></th>
+            <th><a th:text="${sculpture.artist?.name}" th:href="@{/people/artists/{id}(id=${sculpture.artist?.id})}"></a></th>
+            <th scope="row" th:text="${sculpture.style?.name}"></th>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="container text-center mt-3 btn-container">
+        <a class="text-white" th:href="@{/artworks/sculptures/new}">
+            <button class="btn btn-primary">New Sculpture</button>
+        </a>
     </div>
-</div>
 
 <script th:replace="fragments/jqueryImport"></script>
 <script th:replace="fragments/bootstrapMinImport"></script>
