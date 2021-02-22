@@ -6,7 +6,7 @@
 <nav th:replace="fragments/navbar :: #navigation-bar"></nav>
 
 
-<div class="container form-container">
+<div class="container form-container sculpture-form-container">
     <h2 class="text-center font-weight-bold mb-3" style="color: rgba(0, 44, 8, 1); letter-spacing: 3px;">
         New Sculpture</h2>
     <form th:action="@{/artworks/sculptures}" th:object="${sculpture}" method="post"

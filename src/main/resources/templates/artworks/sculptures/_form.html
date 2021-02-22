@@ -21,6 +21,13 @@
     </select>
 </div>
 
+<div class="form-group">
+    <label for="sculpture-material" class="col-form-label">Material</label>
+    <select th:field="*{material.id}" id="sculpture-material" class="form-control">
+        <option th:each="material : ${materials}" th:value="${material.id}" th:text="${material.name}">Material</option>
+    </select>
+</div>
+
 <div class="form-row">
     <div class="form-group col">
         <label for="sculpture-weight-input">Weight</label>

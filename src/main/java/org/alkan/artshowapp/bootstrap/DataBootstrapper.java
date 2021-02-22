@@ -3,11 +3,13 @@ package org.alkan.artshowapp.bootstrap;
 import org.alkan.artshowapp.models.Period;
 import org.alkan.artshowapp.models.Style;
 import org.alkan.artshowapp.models.artworks.Architecture;
+import org.alkan.artshowapp.models.artworks.Material;
 import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.models.artworks.Sculpture;
 import org.alkan.artshowapp.models.people.Architect;
 import org.alkan.artshowapp.models.people.Artist;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
+import org.alkan.artshowapp.repositories.artworks.MaterialRepository;
 import org.alkan.artshowapp.repositories.artworks.SculptureRepository;
 import org.alkan.artshowapp.repositories.people.ArchitectRepository;
 import org.alkan.artshowapp.repositories.people.ArtistRepository;
@@ -31,8 +33,9 @@ public class DataBootstrapper implements CommandLineRunner {
     private final ArchitectureRepository architectures;
     private final SculptureRepository sculptures;
     private final ArchitectRepository architects;
+    private final MaterialRepository materials;
 
-    public DataBootstrapper(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists, PeriodRepository periods, ArchitectureRepository architectures, SculptureRepository sculptures, ArchitectRepository architects) {
+    public DataBootstrapper(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists, PeriodRepository periods, ArchitectureRepository architectures, SculptureRepository sculptures, ArchitectRepository architects, MaterialRepository materials) {
         this.paintings = paintings;
         this.styles = styles;
         this.artists = artists;
@@ -40,6 +43,7 @@ public class DataBootstrapper implements CommandLineRunner {
         this.architectures = architectures;
         this.sculptures = sculptures;
         this.architects = architects;
+        this.materials = materials;
     }
 
     @Override
@@ -153,6 +157,15 @@ public class DataBootstrapper implements CommandLineRunner {
             architect = new Architect();
             architect.setName("Architect" + i);
             architects.save(architect);
+        }
+
+
+
+        Material material;
+        for (long i = 1; i<10; i++) {
+            material = new Material();
+            material.setName("Material" + i);
+            materials.save(material);
         }
     }
 }

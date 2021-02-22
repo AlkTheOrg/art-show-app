@@ -56,9 +56,9 @@ input[type=number] {
 }
 
 .architecture-form-page {
-    background-image: url("../images/collesseum.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url("../images/collesseum2.png");
+    /*background-repeat: repeat-x;*/
+    /*background-position: center;*/
 }
 
 .sculpture-form-page {
@@ -79,8 +79,12 @@ input[type=number] {
 }
 
 .form-container {
-    margin-top: 8rem;
+    margin-top: 5rem;
     width: 30%;
+}
+
+.sculpture-form-container {
+    margin-top: 4rem;
 }
 
 .artwork-form, .people-form {
@@ -140,8 +144,20 @@ footer p {
         }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 720px) {
         .form-container {
-            width: 75%;
+            margin-top: 4rem;
+            width: 70%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        /*.form-container {*/
+        /*    width: 75%;*/
+        /*}*/
+
+        .form-container {
+            margin-top: 3rem;
+            width: 80%;
         }
     }
