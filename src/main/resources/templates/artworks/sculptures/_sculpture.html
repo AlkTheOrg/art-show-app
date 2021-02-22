@@ -7,5 +7,5 @@
         <a th:href="@{/people/artists/{id}(id=${sculpture.artist.id})}" th:text="${sculpture.artist?.name}"></a>
     </p>
     <p class="card-text" th:text="${sculpture?.style?.name}">Style</p>
-    <p class="card-text" th:text="${sculpture?.material?.name}+' '">Material</p>
+    <p class="card-text" th:text="${sculpture?.material?.name}">Material</p>
 </div>
