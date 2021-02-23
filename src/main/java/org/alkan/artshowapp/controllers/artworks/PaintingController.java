@@ -1,6 +1,7 @@
 package org.alkan.artshowapp.controllers.artworks;
 
 import lombok.extern.slf4j.Slf4j;
+import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
@@ -39,7 +40,8 @@ public class PaintingController {
     @GetMapping({"/{paintingId}", "/{paintingId}/"})
     public ModelAndView showPainting(@PathVariable("paintingId") Long paintingId) {
         ModelAndView mav = new ModelAndView("/artworks/paintings/show");
-        mav.addObject(paintings.findById(paintingId).orElse(null));
+        mav.addObject(paintings.findById(paintingId)
+                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id.")));
         return mav;
     }
 
@@ -68,7 +70,7 @@ public class PaintingController {
     @GetMapping({"/update/{paintingId}", "/update/{paintingId}/"})
     public String showUpdatePaintingForm(@PathVariable("paintingId") Long paintingId, Model model) {
         Painting painting = paintings.findById(paintingId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid painting Id:" + paintingId));
+                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id."));
 
         model.addAttribute("painting", painting);
         model.addAttribute("styles", styles.findAll());
@@ -90,7 +92,7 @@ public class PaintingController {
     @GetMapping("/delete/{paintingId}")
     public String deletePainting(@PathVariable("paintingId") Long paintingId, Model model) {
         Painting painting = paintings.findById(paintingId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid painting id: " + paintingId));
+                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id."));
         paintings.delete(painting);
         return "redirect:/artworks/paintings";
     }

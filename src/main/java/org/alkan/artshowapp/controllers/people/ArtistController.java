@@ -1,6 +1,7 @@
 package org.alkan.artshowapp.controllers.people;
 
 import lombok.extern.slf4j.Slf4j;
+import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.models.people.Artist;
 import org.alkan.artshowapp.repositories.PeriodRepository;
@@ -36,7 +37,7 @@ public class ArtistController {
     @GetMapping({"/{id}", "/{id}/"})
     public String showArtist(@PathVariable("id") Long id, Model model) {
         Artist artist = artists.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + id));
+                .orElseThrow(() -> new NotFoundException("Id " + id + " is an invalid Architect id."));
         model.addAttribute("artist", artist);
         return "/people/artists/show";
     }
@@ -68,7 +69,7 @@ public class ArtistController {
     @GetMapping({"/update/{artistId}", "/update/{artistId}/"})
     public String showUpdateArtistForm(@PathVariable("artistId") Long artistId, Model model) {
         Artist artist = artists.findById(artistId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid id: " + artistId));
+                .orElseThrow(() -> new NotFoundException("Id " + artistId + " is an invalid Architect id."));
         model.addAttribute("periods", periods.findAll());
         model.addAttribute("artist", artist);
         return "people/artists/update";
@@ -88,7 +89,7 @@ public class ArtistController {
     @GetMapping("/delete/{artistId}")
     public String deletePainting(@PathVariable("artistId") Long artistId, Model model) {
         Artist artist = artists.findById(artistId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid painting id: " + artistId));
+                .orElseThrow(() -> new NotFoundException("Id " + artistId + " is an invalid Architect id."));
         artist.getPeriods().forEach((period) -> period.getArtists().remove(artist));
         artists.delete(artist);
         return "redirect:/people/artists";

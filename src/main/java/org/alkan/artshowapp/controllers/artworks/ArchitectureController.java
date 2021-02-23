@@ -1,5 +1,6 @@
 package org.alkan.artshowapp.controllers.artworks;
 
+import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.artworks.Architecture;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
@@ -39,7 +40,8 @@ public class ArchitectureController {
     @GetMapping({"/{architectureId}", "/{architectureId}/"})
     public ModelAndView showArchitecture(@PathVariable("architectureId") Long architectureId) {
         ModelAndView mav = new ModelAndView("/artworks/architectures/show");
-        mav.addObject(architectures.findById(architectureId).orElse(null));
+        mav.addObject(architectures.findById(architectureId)
+                .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id.")));
         return mav;
     }
 
@@ -67,7 +69,7 @@ public class ArchitectureController {
     @GetMapping({"/update/{architectureId}", "/update/{architectureId}/"})
     public String showUpdateArchitectureForm(@PathVariable("architectureId") Long architectureId, Model model) {
         Architecture architecture = architectures.findById(architectureId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid architecture id: " + architectureId));
+                .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id."));
         model.addAttribute("architecture", architecture);
         model.addAttribute("styles", styles.findAll());
         model.addAttribute("architects", architects.findAll());
@@ -88,7 +90,7 @@ public class ArchitectureController {
     @GetMapping({"/delete/{architectureId}", "/delete/{architectureId}/"})
     public String deleteArchitecture(@PathVariable("architectureId") Long architectureId, Model model) {
         Architecture architecture = architectures.findById(architectureId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid architecture id: " + architectureId));
+                .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id."));
         architectures.delete(architecture);
         return "redirect:/artworks/architectures";
     }
