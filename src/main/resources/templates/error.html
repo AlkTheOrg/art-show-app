@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html id="welcome-html" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="fragments/mainHtmlTag"></head>
+
+<body id="welcome-body">
+<nav th:replace="fragments/navbar :: #navigation-bar"></nav>
+
+    <div class="error-msg">
+        <h1>This Page Does Not Exist</h1>
+        <h2>Go to <a href="/">homepage</a></h2>
+    </div>
+
+<script th:replace="fragments/jqueryImport"></script>
+<script th:replace="fragments/bootstrapMinImport"></script>
+<script type="text/javascript" th:src="@{js/welcome.js}"></script>
+</body>
+</html>
