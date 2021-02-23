@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.alkan.artshowapp.models.people.Artist;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,8 @@ public class Sculpture extends Artwork{
     @JoinColumn(name = "material_id")
     private Material material;
 
+    @Max(1000000)
+    @Min(1)
     @Column(name = "weight")
     private int weight;
 

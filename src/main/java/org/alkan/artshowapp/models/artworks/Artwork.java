@@ -1,6 +1,5 @@
 package org.alkan.artshowapp.models.artworks;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,21 +14,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "artwork") // same as default @Table
 @Inheritance(strategy = InheritanceType.JOINED)
-//@MappedSuperclass
 public abstract class Artwork extends BaseEntity {
-
-    @Column(name = "name")
-    private String name;
 
     @ManyToOne
     @JoinColumn(name = "style_id")
     private Style style;
 
-    //  private ARTIST TODO;
-
     public Artwork(Long id, String name, Style style) {
-        super(id);
-        this.name = name;
+        super(id, name);
         this.style = style;
     }
 

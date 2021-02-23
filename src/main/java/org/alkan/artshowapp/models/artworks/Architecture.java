@@ -8,6 +8,8 @@ import org.alkan.artshowapp.models.Style;
 import org.alkan.artshowapp.models.people.Architect;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,12 +19,18 @@ import javax.persistence.*;
 @Table
 public class Architecture extends Artwork{
 
+    @Min(1)
+    @Max(1000000)
     @Column(name = "length")
     private double length; // m
 
+    @Min(1)
+    @Max(1000000)
     @Column(name = "width")
     private double width; // m
 
+    @Min(1)
+    @Max(1000000)
     @Column(name = "height")
     private double height; // m
 

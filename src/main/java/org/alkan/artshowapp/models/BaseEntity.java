@@ -4,10 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Getter
@@ -20,8 +19,14 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public BaseEntity(Long id) {
+    @NotBlank
+    @Size(min = 2, max = 255)
+    @Column(name = "name")
+    private String name;
+
+    public BaseEntity(Long id, @NotBlank @Size(min = 2, max = 255) String name) {
         this.id = id;
+        this.name = name;
     }
 
     // Useful when deciding the text of submit buttons on forms.

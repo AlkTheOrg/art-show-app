@@ -18,9 +18,6 @@ import java.util.Set;
 @Table
 public class Material extends BaseEntity {
 
-    @Column(name = "name")
-    private String name;
-
     @OneToMany(mappedBy = "material")
     private Set<Sculpture> sculptures = new HashSet<>();
 }

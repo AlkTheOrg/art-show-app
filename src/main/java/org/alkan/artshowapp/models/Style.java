@@ -19,9 +19,6 @@ import java.util.Set;
 @Table(name = "style") // same as default @Table
 public class Style extends BaseEntity {
 
-    @Column(name = "name")
-    private String name;
-
     @OneToMany(mappedBy = "style")
     private Set<Artwork> artworks = new HashSet<>();
 }

@@ -18,9 +18,6 @@ import java.util.Set;
 @Table
 public class Period extends BaseEntity {
 
-    @Column(name = "name")
-    String name;
-
     @ManyToMany
     @JoinTable(name = "period_artist",
             joinColumns = @JoinColumn(name = "period_id", referencedColumnName = "id"),
