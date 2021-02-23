@@ -28,7 +28,7 @@ public class Person extends BaseEntity { // extends BaseEntity
     @Column(name = "deathYear")
     private Year deathYear;
 
-    @Size(min = 3, max = 255)
+    @Size(min = 3, max = 255, message = "Nationality must be between {min} and {max} characters.")
     @Column(name = "nationality")
     private String nationality;
 

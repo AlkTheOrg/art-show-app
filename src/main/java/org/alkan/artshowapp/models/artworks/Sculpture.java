@@ -22,8 +22,8 @@ public class Sculpture extends Artwork{
     @JoinColumn(name = "material_id")
     private Material material;
 
-    @Max(1000000)
-    @Min(1)
+    @Max(value = 1000000, message = "Weight of the sculpture can not be more than 1000000 kg")
+    @Min(value = 1, message = "Weight of the sculpture can not be less than 1kg")
     @Column(name = "weight")
     private int weight;
 

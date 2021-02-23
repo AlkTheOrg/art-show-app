@@ -19,18 +19,18 @@ import javax.validation.constraints.Min;
 @Table
 public class Architecture extends Artwork{
 
-    @Min(1)
-    @Max(1000000)
+    @Min(value = 1, message = "Length can not be less than 1.")
+    @Max(value = 1000000, message = "Length can not be more than 1000000")
     @Column(name = "length")
     private double length; // m
 
-    @Min(1)
-    @Max(1000000)
+    @Min(value = 1, message = "Width can not be less than 1.")
+    @Max(value = 1000000, message = "Width can not be more than 1000000")
     @Column(name = "width")
     private double width; // m
 
-    @Min(1)
-    @Max(1000000)
+    @Min(value = 1, message = "Height can not be less than 1.")
+    @Max(value = 1000000, message = "Height can not be more than 1000000")
     @Column(name = "height")
     private double height; // m
 
