@@ -21,10 +21,10 @@ public class Artist extends Person {
     @ManyToMany(mappedBy = "artists")
     private Set<Period> periods = new HashSet<>();
 
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Painting> paintings = new HashSet<>();
 
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Sculpture> sculptures = new HashSet<>();
 
     @Builder
