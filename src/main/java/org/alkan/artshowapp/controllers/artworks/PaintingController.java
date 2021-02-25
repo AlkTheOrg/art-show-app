@@ -45,7 +45,6 @@ public class PaintingController {
         return mav;
     }
 
-
     @GetMapping({"/new", "/new/"})
     public String showCreationForm(Model model) {
         model.addAttribute("painting", new Painting());

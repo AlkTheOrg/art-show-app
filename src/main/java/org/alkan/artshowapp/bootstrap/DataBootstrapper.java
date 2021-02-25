@@ -71,14 +71,24 @@ public class DataBootstrapper implements CommandLineRunner {
 
         Period period1 = new Period();
         period1.setId(1L);
-        period1.setName("period1");
+        period1.setName("Romanticism");
 
         Period period2 = new Period();
         period2.setId(2L);
-        period2.setName("period2");
+        period2.setName("Modern");
+
+        Period period3 = new Period();
+        period3.setId(3L);
+        period3.setName("Renaissance");
+
+        Period period4 = new Period();
+        period4.setId(4L);
+        period4.setName("Medieval");
 
         periods.save(period1);
         periods.save(period2);
+        periods.save(period3);
+        periods.save(period4);
 
         Set<Period> periods1 = new HashSet<>();
         periods1.add(period1);
@@ -87,10 +97,10 @@ public class DataBootstrapper implements CommandLineRunner {
         periods2.add(period1);
         periods2.add(period2);
 
-        artists.save(Artist.builder().id(1L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan1").periods(periods1).build());
-        artists.save(Artist.builder().id(2L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan2").periods(periods2).build());
-        artists.save(Artist.builder().id(3L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan3").periods(periods1).build());
-        artists.save(Artist.builder().id(4L).bornYear(Year.of(1999)).deathYear(Year.now()).name("alkan4").periods(periods2).build());
+        artists.save(Artist.builder().id(1L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Leonardo da Vinci").periods(periods1).build());
+        artists.save(Artist.builder().id(2L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Edvard Munch").periods(periods2).build());
+        artists.save(Artist.builder().id(3L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Picasso").periods(periods1).build());
+        artists.save(Artist.builder().id(4L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Vincent van Gogh").periods(periods2).build());
 
         Artist artist1 = artists.findById(1L).orElse(null);
         Artist artist2 = artists.findById(2L).orElse(null);
@@ -128,7 +138,7 @@ public class DataBootstrapper implements CommandLineRunner {
         for (long i = 1; i<10; i++) {
             sculpture = new Sculpture();
             sculpture.setId(i);
-            sculpture.setName("Arch" + i);
+            sculpture.setName("Sculpture " + i);
             sculpture.setWeight((int) (500 * i));
             sculptures.save(sculpture);
         }
@@ -142,7 +152,6 @@ public class DataBootstrapper implements CommandLineRunner {
         Architect mainArch = new Architect();
         mainArch.setName("Main Arch");
         mainArch.setNationality("Norway");
-//        mainArch.setArchitectures(allArchitectures);
         Architect savedArchitect = architects.save(mainArch);
         for(Architecture a : allArchitectures) {
             a.setArchitect(savedArchitect);
