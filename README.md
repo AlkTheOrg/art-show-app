@@ -4,7 +4,8 @@ A web app where users can interact with `Painting`s, `Sculpture`s,
 `Architecture`s and their owners who are either an
 `Artist` or an `Architect` with `CRUD` operations.
 
-[Live Demo](https://art-show-app.herokuapp.com) (May take a few seconds to load at first time)
+[Live Demo](https://art-show-app.herokuapp.com) 
+(May take some time to load at first time)
 
 ## Tech Used
 
