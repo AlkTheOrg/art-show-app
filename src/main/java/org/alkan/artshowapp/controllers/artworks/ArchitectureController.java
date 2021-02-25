@@ -39,7 +39,7 @@ public class ArchitectureController {
 
     @GetMapping({"/{architectureId}", "/{architectureId}/"})
     public ModelAndView showArchitecture(@PathVariable("architectureId") Long architectureId) {
-        ModelAndView mav = new ModelAndView("/artworks/architectures/show");
+        ModelAndView mav = new ModelAndView("artworks/architectures/show");
         mav.addObject(architectures.findById(architectureId)
                 .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id.")));
         return mav;
@@ -73,7 +73,7 @@ public class ArchitectureController {
         model.addAttribute("architecture", architecture);
         model.addAttribute("styles", styles.findAll());
         model.addAttribute("architects", architects.findAll());
-        return "/artworks/architectures/update";
+        return "artworks/architectures/update";
     }
 
     @PostMapping({"/update/{architectureId}", "/update/{architectureId}/"})

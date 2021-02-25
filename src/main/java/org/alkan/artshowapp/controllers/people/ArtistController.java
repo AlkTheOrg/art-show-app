@@ -39,7 +39,7 @@ public class ArtistController {
         Artist artist = artists.findById(id)
                 .orElseThrow(() -> new NotFoundException("Id " + id + " is an invalid Architect id."));
         model.addAttribute("artist", artist);
-        return "/people/artists/show";
+        return "people/artists/show";
     }
 
     @GetMapping({"/new", "/new/"})

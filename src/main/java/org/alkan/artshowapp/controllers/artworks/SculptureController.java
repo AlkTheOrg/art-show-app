@@ -44,7 +44,7 @@ public class SculptureController {
     public String showPainting(@PathVariable("sculptureId") Long sculptureId, Model model) {
         model.addAttribute("sculpture", sculptures.findById(sculptureId)
                 .orElseThrow(() -> new NotFoundException("Id " + sculptureId + " is an invalid Sculpture id.")));
-        return "/artworks/sculptures/show";
+        return "artworks/sculptures/show";
     }
 
     @GetMapping({"/new", "/new/"})
@@ -53,7 +53,7 @@ public class SculptureController {
         model.addAttribute("materials", materials.findAll());
         model.addAttribute("sculpture", new Sculpture());
         model.addAttribute("artists", artists.findAll());
-        return "/artworks/sculptures/new";
+        return "artworks/sculptures/new";
     }
 
     @PostMapping({"", "/"})
@@ -77,7 +77,7 @@ public class SculptureController {
         model.addAttribute("materials", materials.findAll());
         model.addAttribute("sculpture", sculpture);
         model.addAttribute("artists", artists.findAll());
-        return "/artworks/sculptures/update";
+        return "artworks/sculptures/update";
     }
 
     @PostMapping({"/update/{sculptureId}", "/update/{sculptureId}/"})

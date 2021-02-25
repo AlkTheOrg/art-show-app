@@ -39,7 +39,7 @@ public class PaintingController {
 
     @GetMapping({"/{paintingId}", "/{paintingId}/"})
     public ModelAndView showPainting(@PathVariable("paintingId") Long paintingId) {
-        ModelAndView mav = new ModelAndView("/artworks/paintings/show");
+        ModelAndView mav = new ModelAndView("artworks/paintings/show");
         mav.addObject(paintings.findById(paintingId)
                 .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id.")));
         return mav;
