@@ -10,7 +10,7 @@
             Update Architecture</h2>
         <form th:action="@{/artworks/architectures/update/{id}(id=${architecture.id})}"
               th:object="${architecture}" method="post"
-              class="artwork-form p-5" id="update-architecture-form" th:insert="/artworks/architectures/_form">
+              class="artwork-form p-5" id="update-architecture-form" th:insert="artworks/architectures/_form">
         </form>
     </div>
 
