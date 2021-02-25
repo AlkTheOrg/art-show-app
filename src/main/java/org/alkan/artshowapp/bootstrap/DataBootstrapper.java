@@ -104,7 +104,7 @@ public class DataBootstrapper implements CommandLineRunner {
         artists.save(Artist.builder().id(2L).
                 bornYear(Year.of(1999)).
                 deathYear(Year.now()).
-                name("Edvard Munch").periods(periods2).build());
+                name("Edvard Munch").periods(periods2).nationality("Norway").build());
         artists.save(Artist.builder().id(3L)
                 .bornYear(Year.of(1863))
                 .deathYear(Year.of(1944))
@@ -112,7 +112,7 @@ public class DataBootstrapper implements CommandLineRunner {
                 .name("Picasso").periods(periods1).build());
         artists.save(Artist.builder().id(4L)
                 .bornYear(Year.of(1999))
-                .nationality("World")
+                .nationality("Finland")
                 .name("Someone Alive").periods(periods2).build());
 
         Artist artist1 = artists.findById(1L).orElse(null);
