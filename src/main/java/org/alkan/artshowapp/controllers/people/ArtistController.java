@@ -82,6 +82,7 @@ public class ArtistController {
             artist.setId(artistId);
             return "people/artists/update";
         }
+        artist.setId(artistId);
         Artist updatedArtist = artists.save(artist);
         return "redirect:/people/artists/" + updatedArtist.getId();
     }

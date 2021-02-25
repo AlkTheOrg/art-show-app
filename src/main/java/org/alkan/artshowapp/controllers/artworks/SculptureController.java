@@ -87,6 +87,7 @@ public class SculptureController {
             sculpture.setId(sculptureId);
             return "artworks/sculpture/update";
         }
+        sculpture.setId(sculptureId);
         Sculpture updatedSculpture = sculptures.save(sculpture);
         return "redirect:/artworks/sculptures/" + updatedSculpture.getId();
     }

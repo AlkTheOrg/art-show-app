@@ -84,6 +84,7 @@ public class PaintingController {
             painting.setId(paintingId);
             return "artworks/paintings/update";
         }
+        painting.setId(paintingId);
         Painting updatedPainting = paintings.save(painting);
         return "redirect:/artworks/paintings/" + updatedPainting.getId();
     }

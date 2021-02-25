@@ -83,6 +83,7 @@ public class ArchitectureController {
             architecture.setId(architectureId);
             return "artworks/architectures/update";
         }
+        architecture.setId(architectureId);
         Architecture updatedArchitecture = architectures.save(architecture);
         return "redirect:/artworks/architectures/" + updatedArchitecture.getId();
     }

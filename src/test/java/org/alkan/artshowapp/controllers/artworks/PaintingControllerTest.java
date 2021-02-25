@@ -89,7 +89,7 @@ class PaintingControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name(PAINTINGS_URI + "/show"))
+                .andExpect(view().name(PAINTINGS_PATH + "/show"))
                 .andExpect(model().attributeExists("painting"));
     }
 
@@ -98,7 +98,7 @@ class PaintingControllerTest {
     void whenGetRequestToUsersAndInvalidPainting_thenResponseFail() throws Exception {
         when(paintingRepository.findById(anyLong())).thenThrow(NotFoundException.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI  + "/123"))
+        mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/123"))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name(ERROR_PATH_404));
     }

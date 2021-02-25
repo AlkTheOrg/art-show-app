@@ -72,6 +72,7 @@ public class ArchitectController {
             architect.setId(architectId);
             return "people/architects/update";
         }
+        architect.setId(architectId);
         Architect updatedArchitect = architects.save(architect);
         return "redirect:/people/architects/" + updatedArchitect.getId();
     }

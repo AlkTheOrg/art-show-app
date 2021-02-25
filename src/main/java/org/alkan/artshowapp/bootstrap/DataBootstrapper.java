@@ -97,10 +97,23 @@ public class DataBootstrapper implements CommandLineRunner {
         periods2.add(period1);
         periods2.add(period2);
 
-        artists.save(Artist.builder().id(1L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Leonardo da Vinci").periods(periods1).build());
-        artists.save(Artist.builder().id(2L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Edvard Munch").periods(periods2).build());
-        artists.save(Artist.builder().id(3L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Picasso").periods(periods1).build());
-        artists.save(Artist.builder().id(4L).bornYear(Year.of(1999)).deathYear(Year.now()).name("Vincent van Gogh").periods(periods2).build());
+        artists.save(Artist.builder().id(1L).bornYear(Year.of(1999))
+                .bornYear(Year.of(1452))
+                .deathYear(Year.of(1519))
+                .name("Leonardo da Vinci").periods(periods1).nationality("Italy").build());
+        artists.save(Artist.builder().id(2L).
+                bornYear(Year.of(1999)).
+                deathYear(Year.now()).
+                name("Edvard Munch").periods(periods2).build());
+        artists.save(Artist.builder().id(3L)
+                .bornYear(Year.of(1863))
+                .deathYear(Year.of(1944))
+                .nationality("Norway")
+                .name("Picasso").periods(periods1).build());
+        artists.save(Artist.builder().id(4L)
+                .bornYear(Year.of(1999))
+                .nationality("World")
+                .name("Someone Alive").periods(periods2).build());
 
         Artist artist1 = artists.findById(1L).orElse(null);
         Artist artist2 = artists.findById(2L).orElse(null);
