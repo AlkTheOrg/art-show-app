@@ -18,6 +18,6 @@ import java.util.Set;
 @Table
 public class Architect extends Person{
 
-    @OneToMany(mappedBy = "architect", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "architect", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Architecture> architectures = new HashSet<>();
 }

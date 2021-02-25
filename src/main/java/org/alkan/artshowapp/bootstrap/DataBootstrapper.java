@@ -63,12 +63,6 @@ public class DataBootstrapper implements CommandLineRunner {
         got.setId(3L);
         styles.save(got);
 
-        paintings.save(new Painting(1L, "name1", ren, 12.72f, 24.3f));
-        paintings.save(new Painting(2L, "name2", bar, 13.72f, 24.3f));
-        paintings.save(new Painting(3L, "name3", ren, 14.72f, 24.3f));
-        paintings.save(new Painting(4L, "name4", bar, 15.72f, 24.3f));
-        paintings.save(new Painting(5L, "name5", ren, 16.72f, 24.3f));
-
         Period period1 = new Period();
         period1.setId(1L);
         period1.setName("Romanticism");
@@ -119,6 +113,12 @@ public class DataBootstrapper implements CommandLineRunner {
         Artist artist2 = artists.findById(2L).orElse(null);
         Artist artist3 = artists.findById(3L).orElse(null);
         Artist artist4 = artists.findById(4L).orElse(null);
+
+        paintings.save(new Painting(1L, "name1", ren, 12.72f, 24.3f, artist1));
+        paintings.save(new Painting(2L, "name2", bar, 13.72f, 24.3f, artist2));
+        paintings.save(new Painting(3L, "name3", ren, 14.72f, 24.3f, artist3));
+        paintings.save(new Painting(4L, "name4", bar, 15.72f, 24.3f, artist4));
+        paintings.save(new Painting(5L, "name5", ren, 16.72f, 24.3f, artist1));
 
         Set<Artist> allArtists = new HashSet<>();
         allArtists.add(artist1);

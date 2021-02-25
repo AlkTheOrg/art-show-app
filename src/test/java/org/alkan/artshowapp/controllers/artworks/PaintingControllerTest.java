@@ -47,7 +47,7 @@ class PaintingControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new ControllerExceptionHandler())
                 .build();
-        firstPainting = new Painting(1L, "Painting1", null, 12, 12);
+        firstPainting = new Painting(1L, "Painting1", null, 12, 12, null);
     }
 
     @Test

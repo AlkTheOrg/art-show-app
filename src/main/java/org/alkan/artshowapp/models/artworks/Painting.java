@@ -36,10 +36,11 @@ public class Painting extends Artwork{
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    public Painting(Long id, String name, Style style, float length, float width) {
+    public Painting(Long id, String name, Style style, float length, float width, Artist artist) {
         super(id, name, style);
         this.length = length;
         this.width = width;
+        this.artist = artist;
     }
 
     @Override
