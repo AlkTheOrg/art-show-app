@@ -1,13 +1,12 @@
 # Art Show App
 
----
 A web app where users can interact with `Painting`s, `Sculpture`s, 
 `Architecture`s and their owners who are either an
 `Artist` or an `Architect` with `CRUD` operations.
 
 [Live Demo](https://art-show-app.herokuapp.com) (May take up to 30seconds to load at first time)
 
-## <font color="#7ab005">Tech Used</font>
+## Tech Used
 
 
 - Java 11
@@ -20,9 +19,8 @@ A web app where users can interact with `Painting`s, `Sculpture`s,
 - JUnit5, Mockito
 - Hibernate, PostgreSQL, Spring Data JPA, H2 (Before deploying the app)
 
-## <font color="#8BE">Future of the Project</font>
+## Future of the Project
 
----
 - **First milestone is almost completed:**
 There are just few things left to do such as implementing the service layers
   and finishing rest of the unit tests. I only wrote unit tests of PaintingController.
