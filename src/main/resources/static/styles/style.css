@@ -82,8 +82,20 @@ ul {
 }
 
 .error-msg {
-    border-color: darkmagenta;
-    color: magenta;
+    border-color: #133c4c;
+    color: #338c97;
+    padding: 3rem 2rem;
+    border-radius: 2px;
+}
+
+.error-msg h1 {
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.has-error input{
+    border: #bf2525 2px solid !important;
+    color: #ba2020;
 }
 
 #welcome-txt .display-1 {

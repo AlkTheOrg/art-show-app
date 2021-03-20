@@ -3,18 +3,18 @@
     <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
 </ul>
 
-<div class="form-group">
+<div class="form-group" th:class="${#fields.hasErrors('name')} ? 'form-group has-error' : 'form-group'">
     <label for="artist-name-input" class="col-form-label">Name</label>
     <input type="text" id="artist-name-input" class="form-control" th:field="*{name}">
 </div>
 
 <div class="form-row" th:with="thisYear = ${#dates.year(#dates.createNow())}">
-    <div class="form-group col">
+    <div class="form-group col" th:class="${#fields.hasErrors('bornYear')} ? 'form-group col has-error' : 'form-group col'">
         <label for="artist-born-input">Born <small>(yyyy)</small></label>
         <input type="number" step="1" min="-2000" th:max="${thisYear}"
                class="form-control" id="artist-born-input" th:field="*{bornYear}">
     </div>
-    <div class="form-group col">
+    <div class="form-group col" th:class="${#fields.hasErrors('deathYear')} ? 'form-group col has-error' : 'form-group col'">
         <label for="artist-death-input">Died <small>(yyyy)</small></label>
         <input type="number" step="1" min="-2000" th:max="${thisYear}"
                class="form-control" id="artist-death-input" th:field="*{deathYear}">
@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" th:class="${#fields.hasErrors('nationality')} ? 'form-group has-error' : 'form-group'">
     <label for="artist-nationality-input" class="col-form-label">Nationality</label>
     <input type="text" id="artist-nationality-input" class="form-control" th:field="*{nationality}">
 </div>

@@ -2,7 +2,7 @@
 <ul th:if="${#fields.hasErrors('*')}">
     <li th:each="error : ${#fields.errors('*')}" th:text="${error}">error</li>
 </ul>
-<div class="form-group">
+<div class="form-group" th:class="${#fileds.hasErrors('name')} ? 'form-group has-error' : 'form-group'">
     <label for="painting-name" class="col-form-label">Name</label>
     <input type="text" id="painting-name" class="form-control" th:field="*{name}">
 </div>
