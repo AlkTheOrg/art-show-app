@@ -1,11 +1,17 @@
 <img src="https://picsum.photos/1280" alt="picsum image">
 <div class="card-body">
-    <a th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}">
-        <h4 class="card-title" th:text="${sculpture?.name}">Name</h4></a>
-    <h4 class="card-text" th:text="${sculpture?.calculateCost()+'$'}">price</h4>
-    <p class="card-text" th:if="${sculpture.artist}">
-        <a th:href="@{/people/artists/{id}(id=${sculpture.artist.id})}" th:text="${sculpture.artist?.name}"></a>
-    </p>
-    <p class="card-text" th:text="${sculpture?.style?.name}">Style</p>
-    <p class="card-text" th:text="${sculpture?.material?.name}">Material</p>
+    <div class="d-flex justify-content-start align-items-start p-2">
+        <a class="artwork-name" th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}">
+            <h4 class="card-title" th:text="${sculpture?.name}">Name</h4>
+        </a>
+        <span class="by"> by </span>
+        <p class="card-text artwork-artist" th:if="${sculpture.artist}">
+            <a th:href="@{/people/artists/{id}(id=${sculpture.artist.id})}" th:text="${sculpture.artist?.name}"></a>
+        </p>
+    </div>
+    <h4 class="card-text d-flex justify-content-end" th:text="${sculpture?.calculateCost()+'$'}">price</h4>
+    <p class="card-text d-flex justify-content-end artwork-style"
+       th:utext="'<strong>Style: </strong>' + ${sculpture?.style?.name}">Style</p>
+    <p class="card-text d-flex justify-content-end artwork-style"
+       th:utext="'<strong>Material: </strong>' + ${sculpture?.material?.name}">Material</p>
 </div>

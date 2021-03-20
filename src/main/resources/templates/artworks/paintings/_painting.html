@@ -1,9 +1,16 @@
 <img src="https://picsum.photos/1280" alt="picsum image">
 <div class="card-body">
-    <a th:href="@{/artworks/paintings/{id}(id=${painting.id})}"><h4 class="card-title" th:text="${painting?.name}">Name</h4></a>
-    <h4 class="card-text" th:text="${painting?.calculateCost()+'$'}">price</h4>
-    <p class="card-text" th:if="${painting.artist}">
-        <a th:href="@{/people/artists/{id}(id=${painting.artist.id})}" th:text="${painting.artist?.name}"></a>
-    </p>
-    <p class="card-text" th:text="${painting?.style?.name}">Style</p>
+    <div class="d-flex justify-content-start align-items-start p-2">
+        <a class="artwork-name" th:href="@{/artworks/paintings/{id}(id=${painting.id})}">
+            <h4 class="card-title" th:text="${painting?.name}">Name</h4>
+        </a>
+        <span class="by"> by </span>
+        <p class="card-text artwork-artist" th:if="${painting.artist}">
+            <a th:href="@{/people/artists/{id}(id=${painting.artist.id})}"
+               th:text="${painting.artist?.name}"></a>
+        </p>
+    </div>
+    <h4 class="card-text d-flex justify-content-end" th:text="${painting?.calculateCost()+'$'}">price</h4>
+    <p class="card-text d-flex justify-content-end artwork-style"
+       th:utext="'<strong>Style: </strong>' + ${painting?.style?.name}">Style</p>
 </div>
