@@ -29,6 +29,14 @@ public class BaseEntity implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "BaseEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
     // Useful when deciding the text of submit buttons on forms.
     public boolean isNew() {
         return this.id == null;
