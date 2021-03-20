@@ -2,10 +2,7 @@ package org.alkan.artshowapp.bootstrap;
 
 import org.alkan.artshowapp.models.Period;
 import org.alkan.artshowapp.models.Style;
-import org.alkan.artshowapp.models.artworks.Architecture;
-import org.alkan.artshowapp.models.artworks.Material;
-import org.alkan.artshowapp.models.artworks.Painting;
-import org.alkan.artshowapp.models.artworks.Sculpture;
+import org.alkan.artshowapp.models.artworks.*;
 import org.alkan.artshowapp.models.people.Architect;
 import org.alkan.artshowapp.models.people.Artist;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
@@ -18,10 +15,12 @@ import org.alkan.artshowapp.repositories.PeriodRepository;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.Year;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class DataBootstrapper implements CommandLineRunner {
@@ -35,7 +34,10 @@ public class DataBootstrapper implements CommandLineRunner {
     private final ArchitectRepository architects;
     private final MaterialRepository materials;
 
-    public DataBootstrapper(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists, PeriodRepository periods, ArchitectureRepository architectures, SculptureRepository sculptures, ArchitectRepository architects, MaterialRepository materials) {
+    public DataBootstrapper(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists,
+                            PeriodRepository periods, ArchitectureRepository architectures,
+                            SculptureRepository sculptures, ArchitectRepository architects,
+                            MaterialRepository materials) {
         this.paintings = paintings;
         this.styles = styles;
         this.artists = artists;
@@ -48,6 +50,235 @@ public class DataBootstrapper implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+//        createManually();
+//        System.out.println(artists.findByName("sadfsafsad"));
+
+        File folder = ResourceUtils.getFile("classpath:static/");
+        System.out.println(folder); // /home/alkaor/spring/art-show-app/target/classes/static in localhost
+        createFromCsv(folder + "/ArtShowData.csv");
+
+//        Architecture architecture = Objects.requireNonNull(architectures.findById(1L).orElse(null));
+    }
+
+    private void createFromCsv(String csvFile) {
+        Map<Long, String> paintingToAddArtist = new HashMap<>();
+        Map<Long, String> sculptureToAddArtist = new HashMap<>();
+        Map<Long, String> architectureToAddArchitects = new HashMap<>();
+
+        try {
+            Scanner inFile = new Scanner(new File(csvFile));
+
+            String line;
+            while (inFile.hasNextLine()) {
+                line = inFile.nextLine();
+                String[] cols = line.split(",");
+                switch (cols[0]) {
+                    case("1"):
+                        Long paintingId = createPainting(cols[1], cols[2], cols[4], cols[5]);
+                        paintingToAddArtist.put(paintingId, cols[3]);
+                        break;
+                    case("2"):
+                        Long sculptureId = createSculpture(cols[1], cols[2], cols[4], cols[5]);
+                        sculptureToAddArtist.put(sculptureId, cols[3]);
+                        break;
+                    case("3"):
+                        Long architectureId = createArchitecture(cols[1], cols[2], cols[3], cols[4], cols[5]);
+                        for(int i = 6; i < cols.length; i++)
+                            architectureToAddArchitects.put(architectureId, cols[i]);
+                        break;
+                    case("4"):
+                        createArtist(cols[1], cols[2], cols[3], cols[4],
+                                Arrays.copyOfRange(cols, 5,cols.length - 1));
+                        break;
+                    case("5"):
+                        createArchitect(cols[1], cols[2], cols[3], cols[4]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            inFile.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File couldn't be found");
+        }
+
+        assignArtistsToPaintings(paintingToAddArtist);
+        assignArtistsToSculptures(sculptureToAddArtist);
+        assignArchitectsToArchitectures(architectureToAddArchitects);
+    }
+
+    private void assignArtistsToPaintings(Map<Long, String> map) {
+        for(Map.Entry<Long, String> entry : map.entrySet()) {
+            Painting painting = paintings.findById(entry.getKey()).orElse(null);
+            Artist artist = artists.findByName(entry.getValue());
+            painting.setArtist(artist);
+            paintings.save(painting);
+        }
+    }
+
+    private void assignArtistsToSculptures(Map<Long, String> map) {
+        for(Map.Entry<Long, String> entry : map.entrySet()) {
+            Sculpture sculpture = sculptures.findById(entry.getKey()).orElse(null);
+            Artist artist = artists.findByName(entry.getValue());
+            sculpture.setArtist(artist);
+            sculptures.save(sculpture);
+        }
+    }
+
+    private void assignArchitectsToArchitectures(Map<Long, String> map) {
+        for(Map.Entry<Long, String> entry : map.entrySet()) {
+            Architecture architecture = architectures.findById(entry.getKey()).orElse(null);
+            Architect architect = architects.findByName(entry.getValue());
+            architecture.setArchitect(architect);
+            architectures.save(architecture);
+        }
+    }
+
+    private Long createPainting(String name, String styleName, String dim1, String dim2) {
+        Painting painting = new Painting();
+        painting.setName(name);
+        Style style = createOrFindStyle(styleName);
+
+        try {
+            painting.setLength(Float.parseFloat(dim1));
+            painting.setWidth(Float.parseFloat(dim2));
+        } catch (Exception e){
+            System.out.println("Invalid weight");
+        }
+
+        painting = paintings.save(painting);
+        addStyleToArtwork(style, painting);
+        return painting.getId();
+    }
+
+    private Long createSculpture(String name, String styleName, String materialName, String weight) {
+        Sculpture sculpture = new Sculpture();
+        sculpture.setName(name);
+        Style style = createOrFindStyle(styleName);
+        Material material = createOrFindMaterial(materialName);
+
+        try {
+            sculpture.setWeight(Integer.parseInt(weight));
+        } catch (Exception e){
+            System.out.println("Invalid weight");
+        }
+
+        sculpture = sculptures.save(sculpture);
+        addStyleToArtwork(style, sculpture);
+        addMaterialToSculpture(material, sculpture);
+        return sculpture.getId();
+    }
+
+    private Long createArchitecture(String name, String styleName, String dim1, String dim2, String dim3) {
+        Architecture architecture = new Architecture();
+        architecture.setName(name);
+        Style style = createOrFindStyle(styleName);
+
+        try {
+            architecture.setLength(Double.parseDouble(dim1));
+            architecture.setWidth(Double.parseDouble(dim2));
+            architecture.setHeight(Double.parseDouble(dim3));
+        } catch (Exception e){
+            System.out.println("One of the dimensions can not be converted to double");
+        }
+
+        architecture = architectures.save(architecture);
+        addStyleToArtwork(style, architecture);
+        return architecture.getId();
+    }
+
+    private Long createArtist(String name, String born, String died, String nationality, String[] periods) {
+        Artist artist = new Artist();
+        artist.setName(name);
+        artist.setNationality(nationality);
+        Set<Period> periodArray = new HashSet<>();
+
+        try {
+            artist.setBornYear(Year.of(Integer.parseInt(born)));
+            artist.setDeathYear(Year.of(Integer.parseInt(died)));
+        } catch (Exception e) {
+            System.out.println("Either death year or born year is not a decimal number.");
+        }
+
+        artist = artists.save(artist);
+
+        for (String pName : periods)
+            periodArray.add(createOrFindPeriod(pName));
+        for (Period period : periodArray)
+            addPeriodToArtist(period, artist);
+
+        return artist.getId();
+    }
+
+    private Long createArchitect(String name, String born, String died, String nationality) {
+        Architect architect = new Architect();
+        architect.setName(name);
+        architect.setNationality(nationality);
+        try {
+            architect.setBornYear(Year.of(Integer.parseInt(born)));
+            architect.setDeathYear(Year.of(Integer.parseInt(died)));
+        } catch (Exception e) {
+            System.out.println("Either death year or born year is not a decimal number.");
+        }
+        architect = architects.save(architect);
+        return architect.getId();
+    }
+
+    private void addStyleToArtwork(Style style, Artwork artwork) {
+        artwork.setStyle(style);
+        if (artwork instanceof Architecture)
+            architectures.save((Architecture) artwork);
+//          style.getArtworks().add(architecture);
+//          styles.save(style);
+        else if (artwork instanceof Sculpture)
+            sculptures.save((Sculpture) artwork);
+        else if (artwork instanceof Painting)
+            paintings.save((Painting) artwork);
+        else
+            System.out.println("Whaat??");
+    }
+
+    private void addMaterialToSculpture(Material material, Sculpture sculpture) {
+        sculpture.setMaterial(material);
+        sculptures.save(sculpture);
+    }
+
+    private void addPeriodToArtist(Period period, Artist artist) {
+        period.getArtists().add(artist);
+        periods.save(period);
+    }
+
+    private Style createOrFindStyle(String name) {
+        Style style = styles.findByName(name);
+        if (style == null){
+            style = new Style();
+            style.setName(name);
+            styles.save(style);
+        }
+        return style;
+    }
+
+    private Material createOrFindMaterial(String name) {
+        Material material = materials.findByName(name);
+        if (material == null){
+            material = new Material();
+            material.setName(name);
+            materials.save(material);
+        }
+        return material;
+    }
+
+    private Period createOrFindPeriod(String name) {
+        Period period = periods.findByName(name);
+        if (period == null) {
+            period = new Period();
+            period.setName(name);
+            periods.save(period);
+        }
+        return period;
+    }
+
+    private void createManually() {
         Style ren = new Style();
         ren.setName("Renaissance");
         ren.setId(1L);

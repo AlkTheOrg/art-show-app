@@ -4,4 +4,5 @@ import org.alkan.artshowapp.models.people.Architect;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArchitectRepository extends JpaRepository<Architect, Long> {
+    Architect findByName(String name);
 }
