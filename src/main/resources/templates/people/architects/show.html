@@ -8,19 +8,17 @@
     <div class="container person-container">
         <img src="https://picsum.photos/1280" alt="picsum image" class="person-photo float-left mr-2">
         <div class="container text-white text-center">
-            <h1 th:text="${architect.name.toUpperCase()}">Name</h1>
+            <h1 class="person-name" th:text="${architect.name.toUpperCase()}">Name</h1>
 
-            <br>
-
-            <h3 th:with="alive=${architect.deathYear == null}">
-                <p th:if="${!alive}" th:text="${architect.bornYear} + ' - ' + ${architect.deathYear}"></p>
-                <p th:if="${alive}" th:text="${architect.bornYear} + ' - Today'"></p>
-            </h3>
+            <h4 class="person-year" th:with="alive=${architect.deathYear == null}">
+                <p th:if="${!alive}" th:text="'(' + ${architect.bornYear} + ' - ' + ${architect.deathYear} + ')'"></p>
+                <p th:if="${alive}" th:text="${architect.bornYear} + '. Still Alive'"></p>
+            </h4>
 
             <h3 th:text="${architect.nationality}">Nationality</h3>
 
-            <ul th:unless="${architect.architectures.isEmpty()}">
-                <h4>Architectures</h4>
+            <ul class="pt-2 pb-2" th:unless="${architect.architectures.isEmpty()}">
+                <h4 class="let-sp-3">Architectures</h4>
                 <li th:each="architecture : ${architect.architectures}">
                     <a th:href="@{/artworks/architectures/{id}(id=${architecture.id})}"
                        th:text="${architecture.name}">Sculpture Name</a>
@@ -34,14 +32,16 @@
     <!--                <p th:text="${period.name}"></p>-->
     <!--            </li>-->
     <!--        </ul>-->
+            <br class="clearfix mb-md-4">
+            <hr class="clearfix bg-white mb-5 w-25 text-center">
         </div>
     </div>
 
-    <div class="container text-center mt-3 btn-container mb-4 mt-2">
-        <a class="text-white" th:href="@{/people/architects/update/{id}(id=${architect.id})}">
+    <div class="container text-center mt-3 btn-container mb-4 mt-4">
+        <a class="text-white p-1" th:href="@{/people/architects/update/{id}(id=${architect.id})}">
             <button class="btn btn-primary">Update</button>
         </a>
-        <a class="text-white" th:href="@{/people/architects/delete/{id}(id=${architect.id})}">
+        <a class="text-white p-1" th:href="@{/people/architects/delete/{id}(id=${architect.id})}">
             <button class="btn btn-danger">Delete</button>
         </a>
     </div>

@@ -8,46 +8,48 @@
     <div class="container person-container">
         <img src="https://picsum.photos/1280" alt="picsum image" class="person-photo float-left mr-2">
         <div class="container text-white text-center">
-            <h1 th:text="${artist.name.toUpperCase()}">Name</h1>
-            <br>
+            <h1 class="person-name" th:text="${artist.name.toUpperCase()}">Name</h1>
 
-            <h3 th:with="alive=${artist.deathYear == null}">
-                <p th:if="${!alive}" th:text="${artist.bornYear} + ' - ' + ${artist.deathYear}"></p>
-                <p th:if="${alive}" th:text="${artist.bornYear} + ' - Today'"></p>
-            </h3>
+            <h4 class="person-year" th:with="alive=${artist.deathYear == null}">
+                <p th:if="${!alive}" th:text="'(' + ${artist.bornYear} + ' - ' + ${artist.deathYear} + ')'"></p>
+                <p th:if="${alive}" th:text="${artist.bornYear} + '. Still Alive'"></p>
+            </h4>
 
             <h3 th:text="${artist.nationality}">Nationality</h3>
 
-            <ul th:unless="${artist.paintings.isEmpty()}">
-                <h4>Paintings</h4>
+            <ul class="pt-2 pb-2" th:unless="${artist.paintings.isEmpty()}">
+                <h4 class="let-sp-3">Paintings</h4>
                 <li th:each="painting : ${artist.paintings}">
                     <a th:href="@{/artworks/paintings/{id}(id=${painting.id})}"
                        th:text="${painting.name}">Painting Name</a>
                 </li>
             </ul>
 
-            <ul th:unless="${artist.sculptures.isEmpty()}">
-                <h4>Sculptures</h4>
+            <ul class="pt-2 pb-2" th:unless="${artist.sculptures.isEmpty()}">
+                <h4 class="let-sp-3">Sculptures</h4>
                 <li th:each="sculpture : ${artist.sculptures}">
                     <a th:href="@{/artworks/sculptures/{id}(id=${sculpture.id})}"
                        th:text="${sculpture.name}">Sculpture Name</a>
                 </li>
             </ul>
 
-            <ul th:unless="${artist.periods.isEmpty()}">
-                <h4>Periods</h4>
+            <ul class="pt-1 periods-list" th:unless="${artist.periods.isEmpty()}">
+                <h4 class="let-sp-3">Periods</h4>
                 <li th:each="period : ${artist.periods}">
                     <p th:text="${period.name}"></p>
                 </li>
             </ul>
+
+            <br class="clearfix mb-md-4">
+            <hr class="clearfix bg-white mb-5 w-25 text-center">
         </div>
     </div>
 
-    <div class="container text-center mt-3 btn-container mb-4 mt-2">
-        <a class="text-white" th:href="@{/people/artists/update/{id}(id=${artist.id})}">
+    <div class="container text-center mt-3 btn-container mb-4 mt-4">
+        <a class="text-white p-1" th:href="@{/people/artists/update/{id}(id=${artist.id})}">
             <button class="btn btn-primary">Update</button>
         </a>
-        <a class="text-white" th:href="@{/people/artists/delete/{id}(id=${artist.id})}">
+        <a class="text-white p-1" th:href="@{/people/artists/delete/{id}(id=${artist.id})}">
             <button class="btn btn-danger">Delete</button>
         </a>
     </div>

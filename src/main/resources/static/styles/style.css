@@ -118,6 +118,24 @@ ul {
     width: 65%;
 }
 
+.person-name {
+    margin-bottom: 1px;
+}
+
+.person-year {
+    letter-spacing: 5px;
+
+}
+
+.let-sp-3 {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.periods-list li p{
+    margin-bottom: 3px;
+}
+
 #welcome-txt .display-1 {
     padding: 15px;
     letter-spacing: 28px;
