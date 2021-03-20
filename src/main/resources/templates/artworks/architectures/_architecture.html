@@ -6,5 +6,6 @@
         <a th:href="@{/people/architects/{id}(id=${architecture.architect.id})}"
            th:text="${architecture.architect?.name}"></a>
     </p>
+    <p class="card-text" th:unless="${architecture.architect}">Unknown</p>
     <p class="card-text" th:text="${architecture?.style?.name}">Style</p>
 </div>

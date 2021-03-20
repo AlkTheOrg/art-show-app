@@ -19,8 +19,9 @@
             <th scope="row" th:text="${architectureStat.count}">1</th>
             <th><a th:text="${architecture.name}"
                    th:href="@{/artworks/architectures/{id}(id=${architecture.id})}">Name</a></th>
-            <th><a th:text="${architecture.architect?.name}"
+            <th th:if="${architecture.architect}"><a th:text="${architecture.architect.name}"
                    th:href="@{/people/artists/{id}(id=${architecture.architect?.id})}"></a></th>
+            <th th:unless="${architecture.architect}">Unknown</th>
             <th scope="row" th:text="${architecture.style?.name}"></th>
         </tr>
         </tbody>
