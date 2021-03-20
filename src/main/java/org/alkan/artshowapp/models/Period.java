@@ -18,7 +18,7 @@ import java.util.Set;
 @Table
 public class Period extends BaseEntity {
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "period_artist",
             joinColumns = @JoinColumn(name = "period_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id",
