@@ -10,11 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -24,12 +21,12 @@ import java.util.Set;
 public class Painting extends Artwork{
 
     @Min(value = 0, message = "Length can not be less than 1.")
-    @Max(value = 100, message = "Length can not be more than 100")
+    @Max(value = 1000, message = "Length can not be more than 100")
 //    @Digits(fraction = 0, integer = 3)
     private float length;
 
     @Min(value = 0, message = "Width can not be less than 1.")
-    @Max(value = 100, message = "Width can not be more than 100")
+    @Max(value = 1000, message = "Width can not be more than 100")
     private float width;
 
     @ManyToOne
