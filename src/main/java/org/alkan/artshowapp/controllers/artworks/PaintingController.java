@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/artworks/paintings")
 @Controller
 @Slf4j
+@SessionAttributes({"styles", "artists"})
 public class PaintingController {
 
     private final PaintingService paintings;
