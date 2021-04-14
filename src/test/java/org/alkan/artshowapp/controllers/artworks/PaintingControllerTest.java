@@ -3,9 +3,9 @@ package org.alkan.artshowapp.controllers.artworks;
 import org.alkan.artshowapp.controllers.ControllerExceptionHandler;
 import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.artworks.Painting;
-import org.alkan.artshowapp.repositories.StyleRepository;
-import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
-import org.alkan.artshowapp.repositories.people.ArtistRepository;
+import org.alkan.artshowapp.services.ArtistService;
+import org.alkan.artshowapp.services.PaintingService;
+import org.alkan.artshowapp.services.StyleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class PaintingControllerTest {
 
-    @Mock PaintingRepository paintingRepository;
-    @Mock StyleRepository styleRepository;
-    @Mock ArtistRepository artistRepository;
+    @Mock PaintingService paintingService;
+    @Mock StyleService styleService;
+    @Mock ArtistService artistService;
     @Mock Model model;
 
     PaintingController controller;
@@ -35,15 +35,15 @@ class PaintingControllerTest {
 
     MockMvc mockMvc;
 
-    final String PAINTINGS_URI = "/artworks/paintings";
     final String PAINTINGS_PATH = "artworks/paintings";
+    final String PAINTINGS_URI = "/" + PAINTINGS_PATH;
     final String ERROR_PATH_404 = "errors/404error";
     final String ERROR_PATH_400 = "errors/400error";
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        controller = new PaintingController(paintingRepository, styleRepository, artistRepository);
+        controller = new PaintingController(paintingService, styleService, artistService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new ControllerExceptionHandler())
                 .build();
@@ -52,26 +52,26 @@ class PaintingControllerTest {
 
     @Test
     @DisplayName("Should return a view name of paintings>index.html and add all existing paintings to the model")
-    void whenGetRequestToAllPaintings_thenCorrectResponse() {
-        List<Painting> paintingList = new ArrayList<>();
-        paintingList.add(firstPainting);
+    void whenFindAllPaintings_thenCorrectResponse() {
+        Set<Painting> paintingSet = new HashSet<>();
+        paintingSet.add(firstPainting);
 
-        when(paintingRepository.findAll()).thenReturn(paintingList);
-        ArgumentCaptor<List<Painting>> argumentCaptor = ArgumentCaptor.forClass(List.class);
+        when(paintingService.findAll()).thenReturn(paintingSet);
+        ArgumentCaptor<Set<Painting>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
         // Testing if the returned view name is correct
         String viewName = controller.listPaintings(model);
         assertEquals(PAINTINGS_PATH + "/index", viewName);
 
         // Verifying that the findAll method is called only once
-        verify(paintingRepository, times(1)).findAll();
+        verify(paintingService, times(1)).findAll();
 
         // Verifying that the model adds the attribute with name "paintings" for once.
         // and the ArgumentCapture object captures the object that is attached to the "painting".
         verify(model, times(1)).addAttribute(eq("paintings"), argumentCaptor.capture());
 
-        List<Painting> listInTheController = argumentCaptor.getValue(); // getting the list that is captured by AC
-        assertEquals(1, listInTheController.size()); // Asserting that it only has one object.
+        Set<Painting> setInTheController = argumentCaptor.getValue(); // getting the set that is captured by AC
+        assertEquals(1, setInTheController.size()); // Asserting that it only has one object.
     }
 
     @Test
@@ -84,8 +84,9 @@ class PaintingControllerTest {
 
     @Test
     @DisplayName("Should pass when the id of the painting belongs to an existing painting")
-    void whenGetRequestToUsersAndValidPainting_thenCorrectResponse() throws Exception{
-        when(paintingRepository.findById(anyLong())).thenReturn(Optional.of(firstPainting));
+    void whenGetRequestToAPaintingAndValidPainting_thenCorrectResponse() throws Exception{
+//        when(paintingService.findById(anyLong())).thenReturn(Optional.of(firstPainting));
+        when(paintingService.findById(anyLong())).thenReturn(firstPainting);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/1"))
                 .andExpect(status().isOk())
@@ -95,8 +96,8 @@ class PaintingControllerTest {
 
     @Test
     @DisplayName("Should throw exception when the id of the painting doesn't belong to an existing painting")
-    void whenGetRequestToUsersAndInvalidPainting_thenResponseFail() throws Exception {
-        when(paintingRepository.findById(anyLong())).thenThrow(NotFoundException.class);
+    void whenGetRequestToAPaintingAndInvalidPainting_thenResponseFail() throws Exception {
+        when(paintingService.findById(anyLong())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/123"))
                 .andExpect(status().isNotFound())
@@ -117,7 +118,7 @@ class PaintingControllerTest {
         Painting newPainting = new Painting();
         newPainting.setId(1L);
 
-        when(paintingRepository.save(any())).thenReturn(newPainting);
+        when(paintingService.save(any())).thenReturn(newPainting);
 
         mockMvc.perform(MockMvcRequestBuilders.post(PAINTINGS_URI)
             .param("id", "")
@@ -132,7 +133,7 @@ class PaintingControllerTest {
 
     @Test
     void whenPostRequestToNewPaintingsAndInvalidPainting_thenResponseFail() throws Exception{
-        when(paintingRepository.save(any())).thenReturn(firstPainting);
+        when(paintingService.save(any())).thenReturn(firstPainting);
 
         mockMvc.perform(MockMvcRequestBuilders.post(PAINTINGS_URI)
             .param("id", "")
@@ -146,7 +147,7 @@ class PaintingControllerTest {
 
     @Test
     void whenGetRequestToUpdatePaintingsAndValidPainting_thenCorrectResponse() throws Exception{
-        when(paintingRepository.findById(1L)).thenReturn(Optional.of(firstPainting));
+        when(paintingService.findById(1L)).thenReturn(firstPainting);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/update/1"))
                 .andExpect(status().isOk())
@@ -156,7 +157,7 @@ class PaintingControllerTest {
 
     @Test
     void whenGetRequestToUpdatePaintingsAndInvalidPainting_thenResponseFail() throws Exception {
-        when(paintingRepository.findById(999L)).thenThrow(NotFoundException.class);
+        when(paintingService.findById(999L)).thenThrow(NotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/update/999"))
                 .andExpect(status().isNotFound())
@@ -165,9 +166,9 @@ class PaintingControllerTest {
 
     @Test
     void whenPostRequestToUpdatePaintingsAndValidPainting_thenCorrectResponse() throws Exception{
-        when(paintingRepository.save(any())).thenReturn(firstPainting);
+        when(paintingService.save(any())).thenReturn(firstPainting);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/artworks/paintings/update/1")
+        mockMvc.perform(MockMvcRequestBuilders.post(PAINTINGS_URI + "/update/1")
                 .param("id", "")
                 .param("name", "some nameee")
                 .param("width", "12")
@@ -178,9 +179,9 @@ class PaintingControllerTest {
 
     @Test
     void whenPostRequestToUpdatePaintingsAndInvalidPainting_thenResponseFail() throws Exception{
-        when(paintingRepository.save(any())).thenReturn(firstPainting);
+        when(paintingService.save(any())).thenReturn(firstPainting);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/artworks/paintings/update/1")
+        mockMvc.perform(MockMvcRequestBuilders.post(PAINTINGS_URI + "/update/1")
                 .param("id", "")
                 .param("name", "")
                 .param("width", "12")
@@ -192,19 +193,19 @@ class PaintingControllerTest {
 
     @Test
     void whenGetRequestToDeletePaintingsAndValidPainting_thenCorrectResponse() throws Exception{
-        when(paintingRepository.findById(anyLong())).thenReturn(Optional.of(firstPainting));
+        when(paintingService.findById(anyLong())).thenReturn(firstPainting);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:" + PAINTINGS_URI));
 
         // verifying that the delete operation is performed
-        verify(paintingRepository, times(1)).delete(any());
+        verify(paintingService, times(1)).delete(any());
     }
 
     @Test
     void whenGetRequestToDeletePaintingsAndInvalidPainting_thenResponseFail() throws Exception{
-        when(paintingRepository.findById(anyLong())).thenThrow(NotFoundException.class);
+        when(paintingService.findById(anyLong())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PAINTINGS_URI + "/delete/1"))
                 .andExpect(status().isNotFound())
