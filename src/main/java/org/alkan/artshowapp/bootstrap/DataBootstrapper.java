@@ -13,12 +13,15 @@ import org.alkan.artshowapp.repositories.people.ArtistRepository;
 import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
 import org.alkan.artshowapp.repositories.PeriodRepository;
 import org.alkan.artshowapp.repositories.StyleRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.Year;
 import java.util.*;
 
@@ -53,14 +56,18 @@ public class DataBootstrapper implements CommandLineRunner {
 //        createManually();
 //        System.out.println(artists.findByName("sadfsafsad"));
 
-        File folder = ResourceUtils.getFile("classpath:static/");
-//        System.out.println(folder); // /home/alkaor/spring/art-show-app/target/classes/static in localhost
-//        System.out.println((new ClassPathResource("static")).getFile()); // app/target/classes/static
-//        System.out.println((new ClassPathResource("")).getFile()); // app/target/classes
+        ClassPathResource classPathResource = new ClassPathResource("static/ArtShowData.csv");
 
-        createFromCsv(folder + "/ArtShowData.csv");
+        InputStream inputStream = classPathResource.getInputStream();
+        File folder = File.createTempFile("test", ".csv");
+        try {
+            org.apache.commons.io.FileUtils.copyInputStreamToFile(inputStream, folder);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+        }
 
-//        Architecture architecture = Objects.requireNonNull(architectures.findById(1L).orElse(null));
+
+        createFromCsv(folder + "");
     }
 
     private void createFromCsv(String csvFile) {
