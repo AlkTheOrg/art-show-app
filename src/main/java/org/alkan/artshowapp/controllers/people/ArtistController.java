@@ -6,6 +6,8 @@ import org.alkan.artshowapp.models.artworks.Painting;
 import org.alkan.artshowapp.models.people.Artist;
 import org.alkan.artshowapp.repositories.PeriodRepository;
 import org.alkan.artshowapp.repositories.people.ArtistRepository;
+import org.alkan.artshowapp.services.ArtistService;
+import org.alkan.artshowapp.services.PeriodService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +21,10 @@ import javax.validation.Valid;
 @Slf4j
 public class ArtistController {
 
-    private final ArtistRepository artists;
-    private final PeriodRepository periods;
+    private final ArtistService artists;
+    private final PeriodService periods;
 
-    public ArtistController(ArtistRepository artists, PeriodRepository periods) {
+    public ArtistController(ArtistService artists, PeriodService periods) {
         this.artists = artists;
         this.periods = periods;
     }
@@ -36,8 +38,7 @@ public class ArtistController {
 
     @GetMapping({"/{id}", "/{id}/"})
     public String showArtist(@PathVariable("id") Long id, Model model) {
-        Artist artist = artists.findById(id)
-                .orElseThrow(() -> new NotFoundException("Id " + id + " is an invalid Architect id."));
+        Artist artist = artists.findById(id);
         model.addAttribute("artist", artist);
         return "people/artists/show";
     }
@@ -68,8 +69,7 @@ public class ArtistController {
 
     @GetMapping({"/update/{artistId}", "/update/{artistId}/"})
     public String showUpdateArtistForm(@PathVariable("artistId") Long artistId, Model model) {
-        Artist artist = artists.findById(artistId)
-                .orElseThrow(() -> new NotFoundException("Id " + artistId + " is an invalid Architect id."));
+        Artist artist = artists.findById(artistId);
         model.addAttribute("periods", periods.findAll());
         model.addAttribute("artist", artist);
         return "people/artists/update";
@@ -89,8 +89,7 @@ public class ArtistController {
 
     @GetMapping("/delete/{artistId}")
     public String deletePainting(@PathVariable("artistId") Long artistId, Model model) {
-        Artist artist = artists.findById(artistId)
-                .orElseThrow(() -> new NotFoundException("Id " + artistId + " is an invalid Architect id."));
+        Artist artist = artists.findById(artistId);
         artist.getPeriods().forEach((period) -> period.getArtists().remove(artist));
         artists.delete(artist);
         return "redirect:/people/artists";

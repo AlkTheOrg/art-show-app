@@ -1,11 +1,10 @@
 package org.alkan.artshowapp.controllers.artworks;
 
 import lombok.extern.slf4j.Slf4j;
-import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.artworks.Painting;
-import org.alkan.artshowapp.repositories.StyleRepository;
-import org.alkan.artshowapp.repositories.artworks.PaintingRepository;
-import org.alkan.artshowapp.repositories.people.ArtistRepository;
+import org.alkan.artshowapp.services.ArtistService;
+import org.alkan.artshowapp.services.PaintingService;
+import org.alkan.artshowapp.services.StyleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,11 +19,11 @@ import javax.validation.Valid;
 @Slf4j
 public class PaintingController {
 
-    private final PaintingRepository paintings;
-    private final StyleRepository styles;
-    private final ArtistRepository artists;
+    private final PaintingService paintings;
+    private final StyleService styles;
+    private final ArtistService artists;
 
-    public PaintingController(PaintingRepository paintings, StyleRepository styles, ArtistRepository artists) {
+    public PaintingController(PaintingService paintings, StyleService styles, ArtistService artists) {
         this.paintings = paintings;
         this.styles = styles;
         this.artists = artists;
@@ -40,8 +39,8 @@ public class PaintingController {
     @GetMapping({"/{paintingId}", "/{paintingId}/"})
     public ModelAndView showPainting(@PathVariable("paintingId") Long paintingId) {
         ModelAndView mav = new ModelAndView("artworks/paintings/show");
-        mav.addObject(paintings.findById(paintingId)
-                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id.")));
+        mav.addObject(paintings.findById(paintingId));
+//                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id.")));
         return mav;
     }
 
@@ -68,8 +67,8 @@ public class PaintingController {
 
     @GetMapping({"/update/{paintingId}", "/update/{paintingId}/"})
     public String showUpdatePaintingForm(@PathVariable("paintingId") Long paintingId, Model model) {
-        Painting painting = paintings.findById(paintingId)
-                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id."));
+        Painting painting = paintings.findById(paintingId);
+//                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id."));
 
         model.addAttribute("painting", painting);
         model.addAttribute("styles", styles.findAll());
@@ -91,8 +90,8 @@ public class PaintingController {
 
     @GetMapping("/delete/{paintingId}")
     public String deletePainting(@PathVariable("paintingId") Long paintingId, Model model) {
-        Painting painting = paintings.findById(paintingId)
-                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id."));
+        Painting painting = paintings.findById(paintingId);
+//                .orElseThrow(() -> new NotFoundException("Id " + paintingId + " is an invalid Painting id."));
         paintings.delete(painting);
         return "redirect:/artworks/paintings";
     }

@@ -5,6 +5,9 @@ import org.alkan.artshowapp.models.artworks.Architecture;
 import org.alkan.artshowapp.repositories.StyleRepository;
 import org.alkan.artshowapp.repositories.artworks.ArchitectureRepository;
 import org.alkan.artshowapp.repositories.people.ArchitectRepository;
+import org.alkan.artshowapp.services.ArchitectService;
+import org.alkan.artshowapp.services.ArchitectureService;
+import org.alkan.artshowapp.services.StyleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,11 +24,11 @@ import javax.validation.Valid;
 @Controller
 public class ArchitectureController {
 
-    private final ArchitectureRepository architectures;
-    private final StyleRepository styles;
-    private final ArchitectRepository architects;
+    private final ArchitectureService architectures;
+    private final StyleService styles;
+    private final ArchitectService architects;
 
-    public ArchitectureController(ArchitectureRepository architectures, StyleRepository styles, ArchitectRepository architects) {
+    public ArchitectureController(ArchitectureService architectures, StyleService styles, ArchitectService architects) {
         this.architectures = architectures;
         this.styles = styles;
         this.architects = architects;
@@ -40,8 +43,7 @@ public class ArchitectureController {
     @GetMapping({"/{architectureId}", "/{architectureId}/"})
     public ModelAndView showArchitecture(@PathVariable("architectureId") Long architectureId) {
         ModelAndView mav = new ModelAndView("artworks/architectures/show");
-        mav.addObject(architectures.findById(architectureId)
-                .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id.")));
+        mav.addObject(architectures.findById(architectureId));
         return mav;
     }
 
@@ -68,8 +70,7 @@ public class ArchitectureController {
 
     @GetMapping({"/update/{architectureId}", "/update/{architectureId}/"})
     public String showUpdateArchitectureForm(@PathVariable("architectureId") Long architectureId, Model model) {
-        Architecture architecture = architectures.findById(architectureId)
-                .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id."));
+        Architecture architecture = architectures.findById(architectureId);
         model.addAttribute("architecture", architecture);
         model.addAttribute("styles", styles.findAll());
         model.addAttribute("architects", architects.findAll());
@@ -90,8 +91,7 @@ public class ArchitectureController {
 
     @GetMapping({"/delete/{architectureId}", "/delete/{architectureId}/"})
     public String deleteArchitecture(@PathVariable("architectureId") Long architectureId, Model model) {
-        Architecture architecture = architectures.findById(architectureId)
-                .orElseThrow(() -> new NotFoundException("Id " + architectureId + " is an invalid Architecture id."));
+        Architecture architecture = architectures.findById(architectureId);
         architectures.delete(architecture);
         return "redirect:/artworks/architectures";
     }

@@ -2,10 +2,10 @@ package org.alkan.artshowapp.controllers.artworks;
 
 import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.artworks.Sculpture;
-import org.alkan.artshowapp.repositories.StyleRepository;
-import org.alkan.artshowapp.repositories.artworks.MaterialRepository;
-import org.alkan.artshowapp.repositories.artworks.SculptureRepository;
-import org.alkan.artshowapp.repositories.people.ArtistRepository;
+import org.alkan.artshowapp.services.ArtistService;
+import org.alkan.artshowapp.services.MaterialService;
+import org.alkan.artshowapp.services.SculptureService;
+import org.alkan.artshowapp.services.StyleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,13 +21,13 @@ import javax.validation.Valid;
 @Controller
 public class SculptureController {
 
-    private final SculptureRepository sculptures;
-    private final StyleRepository styles;
-    private final MaterialRepository materials;
-    private final ArtistRepository artists;
+    private final SculptureService sculptures;
+    private final StyleService styles;
+    private final MaterialService materials;
+    private final ArtistService artists;
 
-    public SculptureController(SculptureRepository sculptures, StyleRepository styles, MaterialRepository materials,
-                               ArtistRepository artists) {
+    public SculptureController(SculptureService sculptures, StyleService styles, MaterialService materials,
+                               ArtistService artists) {
         this.sculptures = sculptures;
         this.styles = styles;
         this.materials = materials;
@@ -42,8 +42,7 @@ public class SculptureController {
 
     @GetMapping({"/{sculptureId}", "/{sculptureId}/"})
     public String showPainting(@PathVariable("sculptureId") Long sculptureId, Model model) {
-        model.addAttribute("sculpture", sculptures.findById(sculptureId)
-                .orElseThrow(() -> new NotFoundException("Id " + sculptureId + " is an invalid Sculpture id.")));
+        model.addAttribute("sculpture", sculptures.findById(sculptureId));
         return "artworks/sculptures/show";
     }
 
@@ -71,8 +70,7 @@ public class SculptureController {
 
     @GetMapping({"/update/{sculptureId}", "/update/{sculptureId}/"})
     public String showUpdateSculptureForm(@PathVariable("sculptureId") Long sculptureId, Model model) {
-        Sculpture sculpture = sculptures.findById(sculptureId)
-                .orElseThrow(() -> new NotFoundException("Id " + sculptureId + " is an invalid Sculpture id."));
+        Sculpture sculpture = sculptures.findById(sculptureId);
         model.addAttribute("styles", styles.findAll());
         model.addAttribute("materials", materials.findAll());
         model.addAttribute("sculpture", sculpture);
@@ -85,7 +83,7 @@ public class SculptureController {
                                   BindingResult result, Model model) {
         if (result.hasErrors()) {
             sculpture.setId(sculptureId);
-            return "artworks/sculpture/update";
+            return "artworks/sculptures/update";
         }
         sculpture.setId(sculptureId);
         Sculpture updatedSculpture = sculptures.save(sculpture);
@@ -94,8 +92,7 @@ public class SculptureController {
 
     @GetMapping({"/delete/{sculptureId}", "/delete/{sculptureId}/"})
     public String deleteSculpture(@PathVariable("sculptureId") Long sculptureId, Model model) {
-        Sculpture sculpture = sculptures.findById(sculptureId)
-                .orElseThrow(() -> new NotFoundException("Id " + sculptureId + " is an invalid Sculpture id."));
+        Sculpture sculpture = sculptures.findById(sculptureId);
         sculptures.delete(sculpture);
         return "redirect:/artworks/sculptures";
     }

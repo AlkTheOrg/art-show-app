@@ -3,6 +3,7 @@ package org.alkan.artshowapp.controllers.people;
 import org.alkan.artshowapp.exceptions.NotFoundException;
 import org.alkan.artshowapp.models.people.Architect;
 import org.alkan.artshowapp.repositories.people.ArchitectRepository;
+import org.alkan.artshowapp.services.ArchitectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +16,9 @@ import javax.validation.Valid;
 @Controller
 public class ArchitectController {
 
-    private final ArchitectRepository architects;
+    private final ArchitectService architects;
 
-    public ArchitectController(ArchitectRepository architects) {
+    public ArchitectController(ArchitectService architects) {
         this.architects = architects;
     }
 
@@ -29,8 +30,7 @@ public class ArchitectController {
 
     @GetMapping({"/{architectId}", "/{architectId}/"})
     public String showArchitect(@PathVariable("architectId") Long architectId, Model model) {
-        Architect architect = architects.findById(architectId)
-                .orElseThrow(() -> new NotFoundException("Id " + architectId + " is an invalid Architect id."));
+        Architect architect = architects.findById(architectId);
         model.addAttribute("architect", architect);
         return "people/architects/show";
     }
@@ -59,8 +59,7 @@ public class ArchitectController {
 
     @GetMapping({"/update/{architectId}", "/update/{architectId}/"})
     public String showUpdateArchitectForm(Model model, @PathVariable Long architectId) {
-        Architect architect = architects.findById(architectId)
-                .orElseThrow(() -> new NotFoundException("Id " + architectId + " is an invalid Architect id."));
+        Architect architect = architects.findById(architectId);
         model.addAttribute("architect", architect);
         return "people/architects/update";
     }
@@ -79,8 +78,7 @@ public class ArchitectController {
 
     @GetMapping({"/delete/{architectId}", "/delete/{architectId}/"})
     public String deleteArchitect(@PathVariable Long architectId) {
-        Architect architect = architects.findById(architectId)
-                .orElseThrow(() -> new NotFoundException("Id " + architectId + " is an invalid Architect id."));
+        Architect architect = architects.findById(architectId);
         architects.delete(architect);
         return "redirect:/people/architects";
     }
