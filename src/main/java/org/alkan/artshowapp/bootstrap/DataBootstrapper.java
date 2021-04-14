@@ -54,7 +54,10 @@ public class DataBootstrapper implements CommandLineRunner {
 //        System.out.println(artists.findByName("sadfsafsad"));
 
         File folder = ResourceUtils.getFile("classpath:static/");
-        System.out.println(folder); // /home/alkaor/spring/art-show-app/target/classes/static in localhost
+//        System.out.println(folder); // /home/alkaor/spring/art-show-app/target/classes/static in localhost
+//        System.out.println((new ClassPathResource("static")).getFile()); // app/target/classes/static
+//        System.out.println((new ClassPathResource("")).getFile()); // app/target/classes
+
         createFromCsv(folder + "/ArtShowData.csv");
 
 //        Architecture architecture = Objects.requireNonNull(architectures.findById(1L).orElse(null));
